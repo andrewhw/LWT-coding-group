@@ -1,37 +1,37 @@
 #!/usr/bin/env python
 
-# import (make available) the tools in both the "string"
-# and "sys" utility libraries.  The "string" library helps
-# us do the quit action below, while the "sys" library
-# gives us the tools to read input
+	# import (make available) the tools in both the "string"
+	# and "sys" utility libraries.  The "string" library helps
+	# us do the quit action below, while the "sys" library
+	# gives us the tools to read input
 import string, sys
 
-# loop over lines read from "standard input" (the keyboard)
-# stopping when either no line is read, or the line starts
-# with a 'q'
+	# loop over lines read from "standard input" (the keyboard)
+	# stopping when either no line is read, or the line starts
+	# with a 'q'
 
 
-# read a line from "standard input"
+	# read a line from "standard input"
 line = sys.stdin.readline()
 
-# loop based on the number of characters in the line -- notice
-# that we read the next line at the end of the loop
+	# loop based on the number of characters in the line -- notice
+	# that we read the next line at the end of the loop
 while len(line) > 0:
 
-	# if the first letter of the value of the line variable
-	# is 'q', then exit the program
+		# if the first letter of the value of the line variable
+		# is 'q', then exit the program
 	if line.startswith('q'):
 		sys.exit(0)
 
-	# attempt to interpret the value in the line variable
-	# as a floating point number (a.k.a. a number with a
-	# decimal point), and assign the numeric value to the
-	# variable "celsius"
+		# attempt to interpret the value in the line variable
+		# as a floating point number (a.k.a. a number with a
+		# decimal point), and assign the numeric value to the
+		# variable "celsius"
 
-	# if it doesn't seem that what is in line is a number
-	# tell the user that, otherwise (i.e.; if it is a number)
-	# then do some math to get the fahrenheight equivalent
-	# and print it out
+		# if it doesn't seem that what is in line is a number
+		# tell the user that, otherwise (i.e.; if it is a number)
+		# then do some math to get the fahrenheight equivalent
+		# and print it out
 	try: 
 		celsius = float(line)
 	except ValueError:
@@ -40,6 +40,6 @@ while len(line) > 0:
 		fahrenheit = (celsius * 9.0/5.0) + 32
 		print '%.2fC = %.2fF' % (celsius, fahrenheit)
 
-	# read the next line
+		# read the next line
 	line = sys.stdin.readline()
 

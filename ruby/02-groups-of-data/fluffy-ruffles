@@ -1,76 +1,76 @@
-#!/usr/bin/env python
+#!/usr/bin/env ruby
 
-# This example is about putting together a number values into a
-# group, but keeping the group in a single variabe so that we
-# can carry all the parts around together
+	# This example is about putting together a number values into a
+	# group, but keeping the group in a single variabe so that we
+	# can carry all the parts around together
 
-# Python has a number of ways that we can do this, but the two
-# simplest are the "tuple" and the "list".  Both are really
-# just sequences of values, but a tuple is handy when you know
-# how many values are in the sequence, and the order of the
-# sequence is fixed; lists are useful when you may need to
-# add/delete values from the list, and the order may change,
-# or isn't as important
+	# In contrast to Python, ruby uses (as far as I can cell) its
+	# "Array" data structure for all things list-like.
+
+	# This program shows the use of lists of things to put together
+	# a (drink) recipe's ingredients
 
 
-# This program uses tuples and lists to store the parts of a
-# (drink) recipe's ingredients
+	# I have made a separate array for each ingredient, and put
+	# each one into a separate variable.  The first item in each
+	# ingredient array is the amount of the ingredient, the second
+	# is the name or description.
+	#
+	# As far as ruby is concerned, a sequence of values in square
+	# brackets is an array
 
-
-# I have made a separate tuple for each ingredient, and put
-# each tuple into a separate variable.  The first item in each
-# tuple is the amount of the ingredient, the second is the name
-# or description.
-#
-# As far as Python is concerned, a sequence of values in round
-# brackets is a "tuple"
-
-rum = (0.5, "rum")
-vermouth = (0.5, "Italian vermouth (red)")
+rum = [0.5, "rum"]
+vermouth = [0.5, "Italian vermouth (red)"]
 
 lemon = "lemon or lime peel"
 
-# we can put tuples into a list
+	# we can put arrays into another array (a list of lists)
 ingredients = [ rum, vermouth ]
 
 
-# we can put lists into tuples
-fluffy_ruffles = ( "Fluffy Ruffles", ingredients, lemon )
+	# we can have lists mixed with other types
+fluffy_ruffles = [ "Fluffy Ruffles", ingredients, lemon ]
 
 
-print "Here is the drink recipe, printed out as Python understands it:"
-print fluffy_ruffles
+puts "Here is the drink recipe, printed out as ruby understands it:"
+puts fluffy_ruffles.to_s
 
 
-# I did this just to leave three blank lines in what is printed
-print ""
-print ""
+	# I did this just to leave three blank lines in what is printed
+puts ""
+puts ""
 
 
-# we can also pull things out of the organized data 
-# that we have created.  We can get at parts of tuples
-# by assigning them to a list of new variables (in a
-# tuple organization), like this:
+	# we can also pull things out of the organized data that we have
+	# created.  As we put things into this array in order, we know
+	# where they are, so we can do this (but there is a more elegant
+	# way to do this kind of thing with "classes"):
+theNameOfTheDrink = fluffy_ruffles[0]
+ingredientList = fluffy_ruffles[1]
+garnish = fluffy_ruffles[2]
 
-( theNameOfTheDrink, ingredientList, garnish ) = fluffy_ruffles
 
-print "Our Drink: ", theNameOfTheDrink
 
-# here is a way to go through the list of ingredients, one at a time
-# (Python lists start at "location 0", and so a two element list has
-# its items at "location 0" and "location 1")
-numberOfIngredients = len(ingredientList)
+puts "Our Drink: ", theNameOfTheDrink
+
+	# here is a way to go through the list of ingredients, one at a time
+	# (lists start at "location 0", and so a two element list has
+	# its items at "location 0" and "location 1")
+numberOfIngredients = ingredientList.length
 
 ingredientNumber = 0
-while ingredientNumber < numberOfIngredients:
+while ingredientNumber < numberOfIngredients
 
-	# we use (integer) numbers in square brackets to indicate
-	# which item in the list we want, so ingredientList[ 0 ]
-	# is the first item.
-	( amount, ingredientName ) = ingredientList[ ingredientNumber ]
+		# we use (integer) numbers in square brackets to indicate
+		# which item in the list we want, so ingredientList[ 0 ]
+		# is the first ingredient, and ingredientList[0][0] is the
+		# amount part of the first ingredient
+	amount = ingredientList[ ingredientNumber ][0]
+	ingredientName = ingredientList[ ingredientNumber ][1]
 
-	print "  Ingredient", ingredientNumber, " : ", amount, "ounces of", ingredientName
+	puts "  Ingredient[#{ingredientNumber}]: #{amount} ounces of #{ingredientName}"
 	ingredientNumber = ingredientNumber + 1
+end
 
-print "Garnish: ", garnish
+puts "Garnish: " + garnish.to_s
 
