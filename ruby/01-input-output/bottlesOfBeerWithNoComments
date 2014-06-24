@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+numberOfBottles = 9
+whatTheyAreBottlesOf = "beer"
+
+while numberOfBottles > 0
+
+	if numberOfBottles == 1
+		bottleOrBottles="bottle"
+	else
+		bottleOrBottles="bottles"
+	end
+
+
+	puts "There are " + numberOfBottles.to_s + " " + bottleOrBottles + " of " + whatTheyAreBottlesOf + " on the wall,"
+	puts numberOfBottles.to_s + " " + bottleOrBottles + " of " + whatTheyAreBottlesOf
+
+	puts "If one of those bottles should happen to fall, we'd have"
+
+
+	numberOfBottles = numberOfBottles - 1
+
+
+	puts numberOfBottles.to_s + " " + bottleOrBottles + " of " + whatTheyAreBottlesOf + " on the wall!"
+
+	puts ""
+
+end
+
+puts "What a mess -- and a waste of " + whatTheyAreBottlesOf + "!"
+

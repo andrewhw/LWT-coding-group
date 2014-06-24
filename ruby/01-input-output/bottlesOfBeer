@@ -1,0 +1,95 @@
+#!/usr/bin/env ruby
+
+#
+# A nice simple Ruby program.  Idea credit to Lisette Gonzales.
+#
+
+
+# All of this stuff after the '#' characters are comments -- just
+# some text to help the program be understandable to a human, and
+# make it clearer what is going on.  I'll try and put some explanatory
+# comments in as we go, but the actual "working" part of the program
+# is just the bits with no "#" at the beginning of the lines
+#
+# Look for the "bottlesOfBeerWithNoComments" to see just the working
+# stuff (with none of these explanatory comments)
+
+
+
+# This line is setting up a variable with a value; this one happens
+# to be an integer number (because it is a sequence of digits, and
+# not in quotes)
+#
+# Variables are simply values that are given names, mostly so that
+# you can update the values as you go.
+#
+# Names must start with a letter, and the rest of the name can be
+# made up of any combo of letters, numbers or the character '_'
+# ... but nothing else (so no spaces, dashes, punctuation, etc).
+#
+# I set this to '9' instead of '99' because '99' is ... kind of a
+# lot of lines to watch print out
+numberOfBottles = 9
+
+
+# this variable is set to a string value (a sequence of letters) --
+# this is the case because it _is_ in quotes.  If you change this to,
+# say "wine", then all of the printing going on below will be about
+# wine instead of beer
+whatTheyAreBottlesOf = "beer"
+
+
+# The next bit is a loop -- it will keep doing all of the instructions
+# that are indented until the "test" is _false_ -- (in this case
+# "is the value in the numberOfBottles variable greater than zero")
+while numberOfBottles > 0
+
+
+	# we use double equal signs to compare, so Ruby knows that
+	# we are not trying to assign the value '1' to 'numberOfBottles'
+	# here.
+	#
+	# The same logic about indentation applies here -- everything
+	# indented after the if (just one line) is performed _if_ the
+	# test is true -- otherwise ("or else") the stuff after the
+	# else is performed.
+	#
+	if numberOfBottles == 1
+		bottleOrBottles="bottle"
+	else
+		bottleOrBottles="bottles"
+	end
+
+
+	# each of these commands produces one line of output on the terminal
+	puts "There are " + numberOfBottles.to_s + " " + bottleOrBottles + " of " + whatTheyAreBottlesOf + " on the wall,"
+	puts numberOfBottles.to_s + " " + bottleOrBottles + " of " + whatTheyAreBottlesOf
+
+	# The "puts" operation wants a string to print out.  We can make
+	# the string by "adding together" the pieces.  The "to_s" bits
+	# attached to the variable numberOfBottles asks the variable to
+	# produce a version that is converted "to a string" (to_s[tring])
+	# which we then stick on to the other string bits with the plus sign
+
+
+	puts "If one of those bottles should happen to fall, we'd have"
+
+	## adjust the value of the variable
+	numberOfBottles = numberOfBottles - 1
+
+
+	puts numberOfBottles.to_s + " " + bottleOrBottles + " of " + whatTheyAreBottlesOf + " on the wall!"
+
+	## puts a blank line, just for spacing
+	puts ""
+
+
+	# in Ruby, we need to indicate where the loop ends with the "end"
+	# keyword -- Python figures this out because of the indentation
+	# (Ruby doesn't care about the indentation, but it still makes it
+	# more readable for us humans)!
+end
+
+# Since this line is after the "end", it is not part of the loop!
+puts "What a mess -- and a waste of " + whatTheyAreBottlesOf + "!"
+

@@ -1,0 +1,99 @@
+#!/usr/bin/env python
+
+# the above is a little bit of "magic" to tell a Unix/Linux
+# style machine that this is a Python program.
+
+# the "#!" as the first two characters of the file are actually
+# called "the magic"; the rest of the line indicates that the
+# program /usr/bin/env should be called up with the value "python";
+# the "env" program then looks in likely places on the system for
+# the program "python", and assuming it is found, gets "python"
+# to run the rest of the commands in this file
+
+
+
+#
+# A nice simple Python program.  Idea credit to Lisette Gonzales.
+#
+
+
+# All of this stuff after the '#' characters are comments -- just
+# some text to help the program be understandable to a human, and
+# make it clearer what is going on.  I'll try and put some explanatory
+# comments in as we go, but the actual "working" part of the program
+# is just the bits with no "#" at the beginning of the lines
+#
+# Look for the "bottlesOfBeerWithNoComments" to see just the working
+# stuff (with none of these explanatory comments)
+
+
+
+# This line is setting up a variable with a value; this one happens
+# to be an integer number (because it is a sequence of digits, and
+# not in quotes)
+#
+# Variables are simply values that are given names, mostly so that
+# you can update the values as you go.
+#
+# Names must start with a letter, and the rest of the name can be
+# made up of any combo of letters, numbers or the character '_'
+# ... but nothing else (so no spaces, dashes, punctuation, etc).
+#
+# I set this to '9' instead of '99' because '99' is ... kind of a
+# lot of lines to watch print out
+numberOfBottles = 9
+
+
+# this variable is set to a string value (a sequence of letters) --
+# this is the case because it _is_ in quotes.  If you change this to,
+# say "wine", then all of the printing going on below will be about
+# wine instead of beer
+whatTheyAreBottlesOf = "beer"
+
+
+# The next bit is a loop -- it will keep doing all of the instructions
+# that are indented until the "test" is _false_ -- (in this case
+# "is the value in the numberOfBottles variable greater than zero")
+while numberOfBottles > 0:
+
+
+	# we use double equal signs to compare, so Python knows that
+	# we are not trying to assign the value '1' to 'numberOfBottles'
+	# here.
+	#
+	# The same logic about indentation applies here -- everything
+	# indented after the if (just one line) is performed _if_ the
+	# test is true -- otherwise ("or else") the stuff after the
+	# else is performed.
+	#
+	if numberOfBottles == 1:
+		bottleOrBottles="bottle"
+	else:
+		bottleOrBottles="bottles"
+
+
+	# each of these commands produces one line of output on the terminal
+	print "There are", numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf, "on the wall,"
+	print numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf
+
+	# The "print" operation wants a comma-separated list of items
+	# that it is supposed to print out.  It will convert them into
+	# characters, and print them on the "terminal" (the text window
+	# Python is running in)
+
+
+	print "If one of those bottles should happen to fall, we'd have"
+
+	## adjust the value of the variable
+	numberOfBottles = numberOfBottles - 1
+
+
+	print numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf, "on the wall!"
+
+	## print a blank line, just for spacing
+	print ""
+
+
+# Since the below line is not indented, it is _not_ part of the loop
+print "What a mess -- and a waste of ", whatTheyAreBottlesOf, "!"
+

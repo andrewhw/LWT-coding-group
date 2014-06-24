@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+
+# loop over lines read from "standard input" (the keyboard)
+# stopping when either no line is read, or the line starts
+# with a 'q'
+
+
+# read lines from "standard input"
+line = gets
+
+# The below while looks odd, but we can break it down like this:
+# line.nil? -- this indicates whether this line is "nil"
+#              (empty - we are at the end of the input)
+# ! -- "not" (a logical "not", e.g.; "I did not go to the store")
+#
+# We can then read this as:
+#    while the line variable is not "nil", keep looping
+while ! line.nil?
+
+	# if the first letter of the value of the line variable
+	# is 'q', then exit the program.
+	if line.start_with?('q')
+		exit
+	end
+
+	# attempt to interpret the value in the line variable
+	# as a floating point number (a.k.a. a number with a
+	# decimal point), and assign the numeric value to the
+	# variable "celsius"
+
+	# if it doesn't seem that what is in line is a number
+	# tell the user that, otherwise (i.e.; if it is a number)
+	# then do some math to get the fahrenheight equivalent
+	# and print it out
+	begin
+		celsius = line.to_f
+	rescue
+		print "That didn't seem to be a numeric value"
+	else
+		fahrenheit = (celsius * 9.0/5.0) + 32
+		puts celsius.to_s + "C = " + fahrenheit.to_s + "F"
+		# you can also use
+		# puts "#{celsius}C = #{fahrenheit}F"
+		# or
+		# puts "%.2fC = %.2fF" % [celsius, fahrenheit]
+	end
+
+	# read the next line
+	line = gets
+
+end
