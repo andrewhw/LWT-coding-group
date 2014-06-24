@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+
+# This example is about putting together a number values into a
+# group, but keeping the group in a single variabe so that we
+# can carry all the parts around together
+
+# Python has a number of ways that we can do this, but the two
+# simplest are the "tuple" and the "list".  Both are really
+# just sequences of values, but a tuple is handy when you know
+# how many values are in the sequence, and the order of the
+# sequence is fixed; lists are useful when you may need to
+# add/delete values from the list, and the order may change,
+# or isn't as important
+
+
+# This program uses tuples and lists to store the parts of a
+# (drink) recipe's ingredients
+
+
+# I have made a separate tuple for each ingredient, and put
+# each tuple into a separate variable.  The first item in each
+# tuple is the amount of the ingredient, the second is the name
+# or description.
+#
+# As far as Python is concerned, a sequence of values in round
+# brackets is a "tuple"
+
+rum = (0.5, "rum")
+vermouth = (0.5, "Italian vermouth (red)")
+
+lemon = "lemon or lime peel"
+
+# we can put tuples into a list
+ingredients = [ rum, vermouth ]
+
+
+# we can put lists into tuples
+fluffy_ruffles = ( "Fluffy Ruffles", ingredients, lemon )
+
+
+print "Here is the drink recipe, printed out as Python understands it:"
+print fluffy_ruffles
+
+
+# I did this just to leave three blank lines in what is printed
+print ""
+print ""
+
+
+# we can also pull things out of the organized data 
+# that we have created.  We can get at parts of tuples
+# by assigning them to a list of new variables (in a
+# tuple organization), like this:
+
+( theNameOfTheDrink, ingredientList, garnish ) = fluffy_ruffles
+
+print "Our Drink: ", theNameOfTheDrink
+
+# here is a way to go through the list of ingredients, one at a time
+# (Python lists start at "location 0", and so a two element list has
+# its items at "location 0" and "location 1")
+numberOfIngredients = len(ingredientList)
+
+ingredientNumber = 0
+while ingredientNumber < numberOfIngredients:
+
+	# we use (integer) numbers in square brackets to indicate
+	# which item in the list we want, so ingredientList[ 0 ]
+	# is the first item.
+	( amount, ingredientName ) = ingredientList[ ingredientNumber ]
+
+	print "  Ingredient", ingredientNumber, " : ", amount, "ounces of", ingredientName
+	ingredientNumber = ingredientNumber + 1
+
+print "Garnish: ", garnish
+
