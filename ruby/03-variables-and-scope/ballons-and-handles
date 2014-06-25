@@ -1,0 +1,111 @@
+#!/usr/bin/env ruby
+
+	# This will show some data stored in different variables, and
+	# I hope will demonstrate one of the common issues people have,
+	# which is the difference between "a variable" and "the value
+	# it contains.
+	#
+	# In Ruby (and in all other common scripting languages), there
+	# are really two different parts to a variable -- the "handle",
+	# which is the part that has the name, and the value, which is
+	# "attached" to the handle in much the same way that a balloon
+	# would be attached to a string.
+
+	# Say you have a variable, "myballoon" that has a value that
+	# itself contains things (I'm using an array here for this
+	# purpose):
+myballoon = [ "this", "is", "my", "value" ]
+
+puts "STEP 1: myballoon   value: #{myballoon}"
+puts ""
+
+
+	# Confusion frequently arises as one would assume that assigning
+	# the value of "myballoon" to "yourballoon" would generate us
+	# the equivalent of a new balloon attached to a new handle...
+yourballoon = myballoon
+
+	# ... but it doesn't.  Instead, what we have is a second handle
+	# attached to the same balloon.  We can see this if we try and
+	# change the value of the "my" string at location [2] (the third
+	# string in zero-based numbering) in "yourballoon"...
+yourballoon[2] = "your"
+puts " (changing yourballoon...)"
+puts ""
+
+puts "STEP 2: myballoon   value: #{myballoon}"
+puts "STEP 2: yourballoon value: #{yourballoon}"
+puts ""
+
+
+	# If we really want to get a whole new balloon, we need to
+	# "clone" it.  (Some languages and some authors call this a
+	# "deep copy").  The general idea is that we go through all
+	# of the bits in the "value" and make a whole fresh copy:
+anotherballoon = myballoon.clone
+
+	# changing the string at location [2] again, but in the clone
+anotherballoon[2] = "another"
+myballoon[2] = "some kind of"
+puts " (changing anotherballoon and myballoon...)"
+puts ""
+
+puts "STEP 3: myballoon      value: #{myballoon}"
+puts "STEP 3: yourballoon    value: #{yourballoon}"
+puts "STEP 3: anotherballoon value: #{anotherballoon}"
+
+puts ""
+puts " Starting again with simple numeric values"
+puts ""
+
+
+
+	# But if we try this without the array, none of this
+	# happens.  Notice here that we are taking the same
+	# handle, "myballoon", that was just attached to an
+	# array, and instead we are attaching it to a simple
+	# number.  Same handle, but now a different (and much
+	# simpler) baloon:
+myballoon = 12345
+puts "STEP 1: myballoon   value: #{myballoon}"
+
+yourballoon = myballoon
+
+yourballoon = yourballoon * 1.25
+puts " (changing yourballoon...)"
+puts ""
+
+puts "STEP 2: myballoon   value: #{myballoon}"
+puts "STEP 2: yourballoon value: #{yourballoon}"
+puts ""
+
+	# So why is this different?
+	#
+	# This is all because the array is a _container_ -- that
+	# is, it contains other values (that can themselves be
+	# containers, etc).  When Ruby goes to do the assignment,
+	# it attempts to avoid doing all the work of copying
+	# everything, which could be a lot of work (and work that 
+	# might be for nothing).
+
+	# Since in the second example we are not talking about
+	# containers, so therefore we are creating another handle
+	# to a "simple type", and when these get changed, we
+	# effectively get a new balloon attached to our handle
+	# with the new value.
+
+
+	# In fact, we can't even clone these ... trying to clone
+	# them will generate an error (an "exception") telling
+	# us that we can't clone "FixNum" -- a fixed value number.
+
+anotherballoon = myballoon.clone
+
+anotherballoon = anotherbaloon * 12.5
+puts " (changing anotherballoon and myballoon...)"
+puts ""
+
+puts "STEP 3: myballoon      value: #{myballoon}"
+puts "STEP 3: yourballoon    value: #{yourballoon}"
+puts "STEP 3: anotherballoon value: #{anotherballoon}"
+
