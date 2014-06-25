@@ -1,0 +1,164 @@
+#!/usr/bin/env ruby
+
+	# The second confusion about variables has to do with where
+	# they are valid, and how to pass their values around.  This
+	# is such a big topic in computing that it has its own name,
+	# "scope" -- which basically means "where in the program the
+	# variable is valid".
+
+	# To talk about scope, we will need to have some functions,
+	# so I will first make a couple of functions (a function is
+	# just a named chunk of a program -- we can "call" the
+	# function and "pass in" some values (that may come from variables)
+	# and it can also "pass back" (or "return") some other values
+	# to us.
+
+	# This program pretty much just prints some pretty patterns on
+	# the screen, and they will move back and forth, so the first
+	# functions that we write will do the moving
+
+
+
+	# Because these variables are not inside any function, they
+	# will get set up as the script starts.  Since they have the
+	# '$' character at the beginning of their names, they will be
+	# available inside of all of the functions (i.e.; they are
+	# "global"
+$PATTERN_CHARACTER_LO = "."
+$PATTERN_CHARACTER_HI = "#"
+
+
+
+	# shift the values in an array "up" (away from location 0)
+	# by a given amount
+def shiftUp(pattern, amountToShift, valueToFillIn)
+
+		# I'll write this one with a local variable 'i' that
+		# counts where we are moving our values to, and some
+		# start/stop values, and we can use our "while" loop
+		# to move things along.  Note that we are starting
+		# here from the "high" end of the array
+	i = pattern.length-1
+	while i >= amountToShift
+		pattern[i] = pattern[i-amountToShift]
+		i = i - 1
+	end
+
+		# now we fill in the values that are otherwise empty;
+		# and we can keep rolling along using 'i' as it already
+		# has the value of 'amountToShift' after the previous
+		# loop ends
+	while i >= 0
+		pattern[i] = valueToFillIn
+		i = i - 1
+	end
+end
+
+
+
+	# shift the values in an array "down" (towards location 0)
+	# by a given amount
+def shiftDown(pattern, amountToShift, valueToFillIn)
+
+		# The idea of moving along through a sequence is
+		# so common, programming languages provide a "for
+		# loop" specifically for this purpose.  This does
+		# the same work as the while loop shown here:
+		#
+		#	i = 0
+		#	while i < highestValueToMove
+		#		pattern[i] = pattern[i+amountToShift]
+		#		i = i + 1
+		#	end
+		#
+		# The big difference is that we lay out the full
+		# sequence we will move 'i' through in the line
+		# the "for" is on ... and then we don't have to
+		# increment it ourselves
+		#
+	highestValueToMove = pattern.length - amountToShift
+	for i in 0..highestValueToMove-1
+		pattern[i] = pattern[i+amountToShift]
+	end
+
+		# again, we want to keep going, filling in values
+		# in the region we have moved the values down from
+	for i in highestValueToMove..pattern.length-1
+		pattern[i] = valueToFillIn
+	end
+end
+
+
+
+
+	
+	# this function will print out the pattern, using the
+	# value in the global variables $PATTERN_CHARACTER_LO
+	# and $PATTERN_CHARACTER_HI for the 0 and 1 data values
+def printpattern(pattern)
+
+	# We can use the for loop to iterate over the array
+	for i in 0..pattern.length-1
+		if pattern[i] == 0
+			print $PATTERN_CHARACTER_LO
+		else
+			print $PATTERN_CHARACTER_HI
+		end
+	end
+
+	# as "print" doesn't print a newline after its value, we
+	# get all the characters on the same line, but now we
+	# need to add the newline at the end
+	print "\n"
+	
+end
+
+
+
+
+	##
+	## Beginning of the program
+	##
+
+prettyPattern = [	0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
+					1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+					1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+					1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
+					1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0	]
+
+puts "Pretty patterns using characters #{$PATTERN_CHARACTER_LO} and #{$PATTERN_CHARACTER_HI}"
+
+printpattern prettyPattern
+
+	# Note that we are using a different variable called 'i' here,
+	# so that even though both "shiftUp" and "printpattern" use an
+	# 'i' variable -- it is a different (local) 'i' variable
+	#
+	# Also, notice that the reason that shiftUp can change the values
+	# in "prettyPattern" is because of the "balloons-on-a-string" type
+	# handle means that while "shiftUp" is running, there are two
+	# handles to the same array (one called "prettyPattern", here, and
+	# one in the function, called "pattern")
+	#
+	# Both of the handles are "local variables", but the same data is
+	# what is actually referenced by both of the handles
+for i in 0..5
+	shiftDown prettyPattern, 1, 0
+	printpattern prettyPattern
+end
+
+for i in 0..5
+	shiftUp prettyPattern, 2, 0
+	printpattern prettyPattern
+end
+
+for i in 0..4
+	shiftDown prettyPattern, 3, 0
+	printpattern prettyPattern
+end
+
+for i in 0..4
+	shiftUp prettyPattern, 2, 0
+	printpattern prettyPattern
+end
+
