@@ -1,7 +1,7 @@
 LWT-coding-group
 ================
 
-o Code samples in Python and in ruby
+o Code samples in Python and in Ruby
 
 o Hoping that these will help people get started!
 

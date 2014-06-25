@@ -4,7 +4,7 @@
 	# group, but keeping the group in a single variabe so that we
 	# can carry all the parts around together
 
-	# In contrast to Python, ruby uses (as far as I can cell) its
+	# In contrast to Python, Ruby uses (as far as I can cell) its
 	# "Array" data structure for all things list-like.
 
 	# This program shows the use of lists of things to put together
@@ -16,7 +16,7 @@
 	# ingredient array is the amount of the ingredient, the second
 	# is the name or description.
 	#
-	# As far as ruby is concerned, a sequence of values in square
+	# As far as Ruby is concerned, a sequence of values in square
 	# brackets is an array
 
 rum = [0.5, "rum"]
@@ -32,7 +32,7 @@ ingredients = [ rum, vermouth ]
 fluffy_ruffles = [ "Fluffy Ruffles", ingredients, lemon ]
 
 
-puts "Here is the drink recipe, printed out as ruby understands it:"
+puts "Here is the drink recipe, printed out as Ruby understands it:"
 puts fluffy_ruffles.to_s
 
 
