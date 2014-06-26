@@ -15,7 +15,9 @@
 
 	# This program pretty much just prints some pretty patterns on
 	# the screen, and they will move back and forth, so the first
-	# functions that we write will do the moving
+	# functions that we write will do the moving, then at the end
+	# of this file is the "main part" of the program that will
+	# cal the functions
 
 
 
@@ -23,7 +25,7 @@
 	# will get set up as the script starts.  Since they have the
 	# '$' character at the beginning of their names, they will be
 	# available inside of all of the functions (i.e.; they are
-	# "global"
+	# "global")
 $PATTERN_CHARACTER_LO = "."
 $PATTERN_CHARACTER_HI = "#"
 
@@ -34,23 +36,39 @@ $PATTERN_CHARACTER_HI = "#"
 def shiftUp(pattern, amountToShift, valueToFillIn)
 
 		# I'll write this one with a local variable 'i' that
-		# counts where we are moving our values to, and some
-		# start/stop values, and we can use our "while" loop
-		# to move things along.  Note that we are starting
-		# here from the "high" end of the array
+		# counts where we are moving our values _to_, and we
+		# can subtract "amountToShift" to determine where we
+		# should be reading the values _from_.
+		# Note that we are starting here from the "high" end
+		# of the array, and therefore counting down.
+		#
+		# We are counting _down_ essentially because we want
+		# to move the array contents _up_ -- so we start at
+		# the end with the values we will overwrite, and move
+		# the elements up into the "gap" that we are creating
+		# as we move things along.  At the end will will have
+		# lost some of the values at the top end (the number of
+		# values is the amount in "amountToShift"), and then
+		# at the bottom end we will still have old copies
+		# around of the first "amountToShift" number of values
+
 	i = pattern.length-1
 	while i >= amountToShift
+
 		pattern[i] = pattern[i-amountToShift]
 		i = i - 1
+
 	end
 
-		# now we fill in the values that are otherwise empty;
-		# and we can keep rolling along using 'i' as it already
-		# has the value of 'amountToShift' after the previous
-		# loop ends
+		# now we fill in the values at the bottom end that are
+		# otherwise empty; and we can keep rolling along using
+		# 'i' as it already has the value of 'amountToShift'
+		# after the previous loop ends
 	while i >= 0
+
 		pattern[i] = valueToFillIn
 		i = i - 1
+
 	end
 end
 
@@ -74,7 +92,7 @@ def shiftDown(pattern, amountToShift, valueToFillIn)
 		# The big difference is that we lay out the full
 		# sequence we will move 'i' through in the line
 		# the "for" is on ... and then we don't have to
-		# increment it ourselves
+		# increment 'i' ourselves
 		#
 	highestValueToMove = pattern.length - amountToShift
 	for i in 0..highestValueToMove-1
@@ -97,7 +115,12 @@ end
 	# and $PATTERN_CHARACTER_HI for the 0 and 1 data values
 def printpattern(pattern)
 
-	# We can use the for loop to iterate over the array
+	# We can use the for loop to iterate over the array.
+	# The range we want 'i' to take on starts at 0, but
+	# as "pattern.length" tells us how many elements are in
+	# "pattern", the range "0..pattern.length" would step
+	# us one position _past the end of the array_
+
 	for i in 0..pattern.length-1
 		if pattern[i] == 0
 			print $PATTERN_CHARACTER_LO
@@ -107,8 +130,8 @@ def printpattern(pattern)
 	end
 
 	# as "print" doesn't print a newline after its value, we
-	# get all the characters on the same line, but now we
-	# need to add the newline at the end
+	# get all the characters above printed on the same line,
+	# but now we need to manually add the newline at the end
 	print "\n"
 	
 end
@@ -158,7 +181,7 @@ for i in 0..4
 end
 
 for i in 0..4
-	shiftUp prettyPattern, 2, 0
+	shiftUp prettyPattern, 2, 1
 	printpattern prettyPattern
 end
 
