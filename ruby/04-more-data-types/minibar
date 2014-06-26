@@ -83,6 +83,19 @@ class MixedDrink
 	@ingredient << Ingredient.new(description, amount, unit)
   end
 
+	# print out the drink, nicely
+  def prettyPrint
+	puts "'#{@name}' : #{@ingredient.length} ingredients"
+
+	for i in 0..@ingredient.length-1
+	  puts "  #{@ingredient[i].amount} #{@ingredient[i].units} #{@ingredient[i].name}"
+	end
+
+	if @garnish
+	  puts "  Garnish with #{@garnish}"
+	end
+  end
+
 end
 
 
@@ -95,17 +108,18 @@ fluffy_ruffles = MixedDrink.new "Fluffy Ruffles"
 fluffy_ruffles.garnish = "lemon or lime peel"
 fluffy_ruffles.addIngredient("rum", 0.5)
 fluffy_ruffles.addIngredient("red vermouth", 0.5)
-fluffy_ruffles.addIngredient("ice", 3)
+fluffy_ruffles.addIngredient("ice", 3, "cubes")
 
 manhattan = MixedDrink.new "Manhattan"
 manhattan.garnish = "maraschino cherry"
 manhattan.addIngredient("whisky (usually bourbon)", 0.5)
 manhattan.addIngredient("red vermouth", 0.5)
-manhattan.addIngredient("ice", 3)
+manhattan.addIngredient("ice", 3, "cubes")
 
 
 drink_list = [ fluffy_ruffles, manhattan ]
 
 for i in 0..drink_list.length-1
-	p drink_list[i]
+	drink_list[i].prettyPrint
+	puts ""
 end
