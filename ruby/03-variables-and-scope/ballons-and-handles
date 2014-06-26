@@ -65,7 +65,7 @@ puts ""
 	# handle, "myballoon", that was just attached to an
 	# array, and instead we are attaching it to a simple
 	# number.  Same handle, but now a different (and much
-	# simpler) baloon:
+	# simpler) balloon:
 myballoon = 12345
 puts "STEP 1: myballoon   value: #{myballoon}"
 
