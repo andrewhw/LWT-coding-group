@@ -1,0 +1,223 @@
+#!/usr/bin/env ruby
+
+	# This example extends "minibar_hash_ingredient"
+	# from the last directory to include input from a
+	# user -- basically the same example, but now it
+	# gets the keys to search for from the keyboard
+
+
+	# "MixedDrink" will be the object describing each drink
+class MixedDrink
+
+		# these are readable outside of this class
+	attr_reader :name, :ingredient
+
+		# garnish is read/write
+	attr_accessor :garnish
+
+    
+		# create a new object of this type -- we will add the
+		# ingredients to it after creating it by name
+	def initialize(name)
+
+		@name = name
+
+			# empty array for the ingredients
+		@ingredient = []
+	end
+
+			# "inner class" for the ingredients
+	class Ingredient
+
+			# make all data readable
+		attr_reader :name, :amount, :units
+
+		def initialize(name, amount, units)
+			@name = name
+			@amount = amount
+			@units = units
+		end
+	end
+
+		# add an ingredient to our array of ingredients
+		# we must supply a description and amount, but
+		# the "unit" variable has a default of "oz"
+	def addIngredient(description, amount, unit="oz")
+
+		@ingredient << Ingredient.new(description, amount, unit)
+	end
+
+		# print out the drink, nicely
+	def prettyPrint
+		puts "'#{@name}' : #{@ingredient.length} ingredients"
+
+		for i in 0..@ingredient.length-1
+			puts "  #{@ingredient[i].amount} #{@ingredient[i].units} #{@ingredient[i].name}"
+		end
+
+		if @garnish
+			puts "  Garnish with #{@garnish}"
+		end
+	end
+
+end
+
+
+	# add the drink to the two supplied hashes,
+	# the first by name, the second by ingredient.
+	#
+	# The first hash assumes that there are no duplicates,
+	# so it is simply a straightforward key/value hash,
+	# but the second one is a key/container hash, and
+	# we put the ingredients into the container
+def addDrinkToHashes(nameHash, ingredientHash, drink)
+
+		# this one is easy, as we just install the
+		# value into the hash
+	nameHash[drink.name] = drink
+
+		# this one is more complicated, as we nee to
+		# find out if there is a container already
+		# that we are adding to, and if not, install
+		# a new empty container with our value in it
+		# ... and we are doing this for each ingredient
+		# named in the drink
+	for i in drink.ingredient
+
+			#
+		begin
+			iContainer = ingredientHash[ i.name ]
+			iContainer << drink
+		rescue
+			# we will arrive here if our attempt
+			# to access the hash using 'i.name'
+			# failed, so now we create a container,
+			# add the drink to it, and install
+			# _that_ into the hash
+			iContainer = []
+			iContainer << drink
+			ingredientHash[ i.name ] = iContainer
+		end
+	end
+
+end
+
+
+	# here is the main part of the program -- we make an
+	# empty hash for looking up by name, and a separate one
+	# for looking up by ingredient, and the add the drinks
+	# to each of them name as we go, using the appropriate
+	# keys
+
+drinkNameHash = { }
+drinkIngredientHash = { }
+
+drink = MixedDrink.new "Fluffy Ruffles"
+drink.garnish = "lemon or lime peel"
+drink.addIngredient("rum", 0.5)
+drink.addIngredient("red vermouth", 0.5)
+drink.addIngredient("ice", 3, "cubes")
+
+	# add the new drink to the list -- here "drink.name"
+	# will be the name we gave the drink, and "drink" is
+	# the drink itself
+addDrinkToHashes drinkNameHash, drinkIngredientHash, drink
+
+
+
+drink = MixedDrink.new "Manhattan"
+drink.garnish = "maraschino cherry"
+drink.addIngredient("whisky (usually bourbon)", 0.5)
+drink.addIngredient("red vermouth", 0.5)
+drink.addIngredient("ice", 3, "cubes")
+
+addDrinkToHashes drinkNameHash, drinkIngredientHash, drink
+
+
+
+drink = MixedDrink.new "Vodka Tonic"
+drink.garnish = "lime"
+drink.addIngredient("vodka", 0.5)
+drink.addIngredient("tonic water", 5)
+drink.addIngredient("ice", 3, "cubes")
+
+addDrinkToHashes drinkNameHash, drinkIngredientHash, drink
+
+
+
+	# now we start a loop, looking for input from
+	# the user
+
+puts "Welcome to the (very) mini bar."
+puts ""
+puts "Enter 'i' or 'd', followed by the search key, or 'q' to quit"
+puts ""
+
+prompt = 'Search command (e.g. "i rum"): '
+
+	# this is a while loop with the test (to see whether
+	# we keep going) at the end -- sometimes this is more
+	# convenient
+begin
+		# print out our prompt"
+	puts prompt
+
+		# get a line of input
+	inputLine = gets
+
+
+	if inputLine[0] == 'n' or inputLine[0] == 'i'
+
+		if inputLine.length > 2
+
+				# put from position 2 until the end of the string
+				# into the variable "keyToLookUp"
+			keyToLookUp = inputLine[2..-1]
+
+				# this will generate a version of the string with
+				# any "whitespace" (spaces, tabs, newlines, etc.)
+				# removed.
+				#
+				# Some languages use "trim" instead of "strip", but
+				# this is what we get in Ruby
+			keyToLookUp = keyToLookUp.strip
+
+			if inputLine[0] == 'n'
+
+				puts "Searching by drink name = #{keyToLookUp}"
+				drinkFound = drinkNameHash[ keyToLookUp ]
+				if drinkFound
+					drinkFound.prettyPrint
+				else
+					puts "No drink called '#{keyToLookUp}' was found, sorry"
+				end
+
+			elsif inputLine[0] == 'i'
+
+				puts "Searching by drink ingredient = #{keyToLookUp}"
+				drinkFoundContainer = drinkIngredientHash[ keyToLookUp ]
+				if drinkFoundContainer
+					puts "#{drinkFoundContainer.length} drinks contain '#{keyToLookUp}':"
+					for d in drinkFoundContainer
+						d.prettyPrint
+						puts ""
+					end
+				else
+					puts "No drinks have an ingredient called '#{keyToLookUp}', sorry"
+				end
+			end
+		else
+			puts "No search key was given after 'i' or 'n'..."
+		end
+
+	elsif inputLine[0] != 'q'
+		puts "I don't understand the command "#{inputLine[0]} -- sorry"
+		puts "Please put 'i' or 'n' as a command at the beginning of the line"
+	end
+
+	puts ""
+
+end while inputLine[0] != 'q'
+
+
+puts "Thanks for checking out the very mini bar..."

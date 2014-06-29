@@ -1,0 +1,238 @@
+#!/usr/bin/env ruby
+
+	# This example extends "minibar_hash_name" to include
+	# name based lookup using "Hash" structures when the
+	# keys may not be unique
+	#
+	# The Big Idea...
+	#
+	# Most scripting languages don't let you have duplicate
+	# keys, and Ruby is no exception, so the trick is to put
+	# some kind of container into the "hash" as the item looked
+	# up by key -- and then put your items into the container.
+	#
+	# I'm just going to use arrays here as the container, but
+	# you could use another hash, or really anything that
+	# you think works best for your needs
+
+	# There is one new function in this file:
+	#	addDrinkToHashes
+	# that puts the drink into the two hashes
+
+
+	# "MixedDrink" will be the object describing each drink
+class MixedDrink
+
+		# these are readable outside of this class
+	attr_reader :name, :ingredient
+
+		# garnish is read/write
+	attr_accessor :garnish
+
+    
+		# create a new object of this type -- we will add the
+		# ingredients to it after creating it by name
+	def initialize(name)
+
+		@name = name
+
+			# empty array for the ingredients
+		@ingredient = []
+	end
+
+			# "inner class" for the ingredients
+	class Ingredient
+
+			# make all data readable
+		attr_reader :name, :amount, :units
+
+		def initialize(name, amount, units)
+			@name = name
+			@amount = amount
+			@units = units
+		end
+	end
+
+		# add an ingredient to our array of ingredients
+		# we must supply a description and amount, but
+		# the "unit" variable has a default of "oz"
+	def addIngredient(description, amount, unit="oz")
+
+		@ingredient << Ingredient.new(description, amount, unit)
+	end
+
+		# print out the drink, nicely
+	def prettyPrint
+		puts "'#{@name}' : #{@ingredient.length} ingredients"
+
+		for i in 0..@ingredient.length-1
+			puts "  #{@ingredient[i].amount} #{@ingredient[i].units} #{@ingredient[i].name}"
+		end
+
+		if @garnish
+			puts "  Garnish with #{@garnish}"
+		end
+	end
+
+end
+
+
+	# add the drink to the two supplied hashes,
+	# the first by name, the second by ingredient.
+	#
+	# The first hash assumes that there are no duplicates,
+	# so it is simply a straightforward key/value hash,
+	# but the second one is a key/container hash, and
+	# we put the ingredients into the container
+def addDrinkToHashes(nameHash, ingredientHash, drink)
+
+		# this one is easy, as we just install the
+		# value into the hash
+	nameHash[drink.name] = drink
+
+		# this one is more complicated, as we nee to
+		# find out if there is a container already
+		# that we are adding to, and if not, install
+		# a new empty container with our value in it
+		# ... and we are doing this for each ingredient
+		# named in the drink
+	for i in drink.ingredient
+
+			#
+		begin
+			iContainer = ingredientHash[ i.name ]
+			iContainer << drink
+		rescue
+			# we will arrive here if our attempt
+			# to access the hash using 'i.name'
+			# failed, so now we create a container,
+			# add the drink to it, and install
+			# _that_ into the hash
+			iContainer = []
+			iContainer << drink
+			ingredientHash[ i.name ] = iContainer
+		end
+	end
+
+end
+
+
+	# here is the main part of the program -- we make an
+	# empty hash for looking up by name, and a separate one
+	# for looking up by ingredient, and the add the drinks
+	# to each of them name as we go, using the appropriate
+	# keys
+
+drinkNameHash = { }
+drinkIngredientHash = { }
+
+drink = MixedDrink.new "Fluffy Ruffles"
+drink.garnish = "lemon or lime peel"
+drink.addIngredient("rum", 0.5)
+drink.addIngredient("red vermouth", 0.5)
+drink.addIngredient("ice", 3, "cubes")
+
+	# add the new drink to the list -- here "drink.name"
+	# will be the name we gave the drink, and "drink" is
+	# the drink itself
+addDrinkToHashes drinkNameHash, drinkIngredientHash, drink
+
+
+
+drink = MixedDrink.new "Manhattan"
+drink.garnish = "maraschino cherry"
+drink.addIngredient("whisky (usually bourbon)", 0.5)
+drink.addIngredient("red vermouth", 0.5)
+drink.addIngredient("ice", 3, "cubes")
+
+addDrinkToHashes drinkNameHash, drinkIngredientHash, drink
+
+
+
+drink = MixedDrink.new "Vodka Tonic"
+drink.garnish = "lime"
+drink.addIngredient("vodka", 0.5)
+drink.addIngredient("tonic water", 5)
+drink.addIngredient("ice", 3, "cubes")
+
+addDrinkToHashes drinkNameHash, drinkIngredientHash, drink
+
+
+keyToLookUp = "Vodka Tonic"
+puts "Looking up a '#{keyToLookUp}' in our name hash..."
+
+	# use the string in "keyToLookUp" as the key
+	# to look our drink up
+
+drinkFound = drinkNameHash[ keyToLookUp ]
+if drinkFound
+	puts "Found '#{keyToLookUp}':"
+	drinkFound.prettyPrint
+else
+	puts "Drink '#{keyToLookUp}' not found..."
+end
+
+
+puts ""
+puts ""
+
+
+	# look up an ingredient that only occurs in one drink...
+
+keyToLookUp = "rum"
+puts "Looking up '#{keyToLookUp}' in our ingredient hash..."
+
+drinkFoundContainer = drinkIngredientHash[ keyToLookUp ]
+if drinkFoundContainer
+	puts "#{drinkFoundContainer.length} drinks contain '#{keyToLookUp}':"
+	for d in drinkFoundContainer
+		d.prettyPrint
+		puts ""
+	end
+else
+	puts "No drinks contain '#{keyToLookUp}'..."
+end
+
+
+puts ""
+puts ""
+
+
+	# look up an ingredient that occurs in more than one drink...
+
+keyToLookUp = "ice"
+puts "Looking up '#{keyToLookUp}' in our ingredient hash..."
+
+drinkFoundContainer = drinkIngredientHash[ keyToLookUp ]
+if drinkFoundContainer
+	puts "#{drinkFoundContainer.length} drinks contain '#{keyToLookUp}':"
+	for d in drinkFoundContainer
+		d.prettyPrint
+		puts ""
+	end
+else
+	puts "No drinks contain '#{keyToLookUp}'..."
+end
+
+
+puts ""
+puts ""
+
+
+	# look up an ingredient that occurs in no drinks at all...
+
+keyToLookUp = "brandy"
+puts "Looking up '#{keyToLookUp}' in our ingredient hash..."
+
+drinkFoundContainer = drinkIngredientHash[ keyToLookUp ]
+if drinkFoundContainer
+	puts "#{drinkFoundContainer.length} drinks contain '#{keyToLookUp}':"
+	for d in drinkFoundContainer
+		d.prettyPrint
+		puts ""
+	end
+else
+	puts "No drinks contain '#{keyToLookUp}'..."
+end
+
+

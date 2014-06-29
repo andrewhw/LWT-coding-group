@@ -1,0 +1,136 @@
+#!/usr/bin/env ruby
+
+	# This example extends "minibar_list" to include
+	# name based lookup using "Hash" structures.
+	#
+	# A "Hash" is simply a way of putting items into
+	# a list where they can be looked up by key.  Other
+	# languages refer to this idea by various names, 
+	# such as "(associative) map", "dictionary",
+	# "directory" or # "hash (table)".
+	#
+	# They all do pretty much the same thing -- let you look
+	# things up by key -- pretty much the way you would use
+	# a real dictionary (or phone book, or employee directory,
+	# or any of a million other things).
+	#
+	# In this example, I'm just going to assume that we don't
+	# have any duplicates, as you cannot put more than one
+	# item in a Hash with the same key (but look at the
+	# "minibar_hash_ingredient" example for a way around this)
+
+	# The first part of this example (all the way down to the
+	# main program part) is the same as "minibar_list", so I
+	# have reduced the comments to make it more readable
+
+
+	# "MixedDrink" will be the object describing each drink
+class MixedDrink
+
+		# these are readable outside of this class
+	attr_reader :name, :ingredient
+
+		# garnish is read/write
+	attr_accessor :garnish
+
+    
+		# create a new object of this type -- we will add the
+		# ingredients to it after creating it by name
+	def initialize(name)
+
+		@name = name
+
+			# empty array for the ingredients
+		@ingredient = []
+	end
+
+			# "inner class" for the ingredients
+	class Ingredient
+
+			# make all data readable
+		attr_reader :name, :amount, :units
+
+		def initialize(name, amount, units)
+			@name = name
+			@amount = amount
+			@units = units
+		end
+	end
+
+		# add an ingredient to our array of ingredients
+		# we must supply a description and amount, but
+		# the "unit" variable has a default of "oz"
+	def addIngredient(description, amount, unit="oz")
+
+		@ingredient << Ingredient.new(description, amount, unit)
+	end
+
+		# print out the drink, nicely
+	def prettyPrint
+		puts "'#{@name}' : #{@ingredient.length} ingredients"
+
+		for i in 0..@ingredient.length-1
+			puts "  #{@ingredient[i].amount} #{@ingredient[i].units} #{@ingredient[i].name}"
+		end
+
+		if @garnish
+			puts "  Garnish with #{@garnish}"
+		end
+	end
+
+end
+
+
+
+
+	# here is the main part of the program -- we make an
+	# empty hash, and add the drinks to it by name as we go
+
+drinkNameHash = { }
+
+drink = MixedDrink.new "Fluffy Ruffles"
+drink.garnish = "lemon or lime peel"
+drink.addIngredient("rum", 0.5)
+drink.addIngredient("red vermouth", 0.5)
+drink.addIngredient("ice", 3, "cubes")
+
+	# add the new drink to the list -- here "drink.name"
+	# will be the name we gave the drink, and "drink" is
+	# the drink itself
+drinkNameHash[drink.name] = drink
+
+
+
+drink = MixedDrink.new "Manhattan"
+drink.garnish = "maraschino cherry"
+drink.addIngredient("whisky (usually bourbon)", 0.5)
+drink.addIngredient("red vermouth", 0.5)
+drink.addIngredient("ice", 3, "cubes")
+
+drinkNameHash[drink.name] = drink
+
+
+
+drink = MixedDrink.new "Vodka Tonic"
+drink.garnish = "lime"
+drink.addIngredient("vodka", 0.5)
+drink.addIngredient("tonic water", 5)
+drink.addIngredient("ice", 3, "cubes")
+
+drinkNameHash[drink.name] = drink
+
+
+keyToLookUp = "Vodka Tonic"
+puts "Looking up a "#{keyToLookUp} in our name hash..."
+
+	# use the string in "keyToLookUp" as the key
+	# to look our drink up
+
+drinkFound = drinkNameHash[ keyToLookUp ]
+if drinkFound
+	puts "Found '#{keyToLookUp}':"
+	drinkFound.prettyPrint
+else
+	puts "Drink '#{keyToLookUp}' not found..."
+end
+
