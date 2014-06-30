@@ -106,7 +106,7 @@ end
 	# here is the main part of the program -- we make an
 	# empty array, and add the drinks to it as we go
 
-drink_list = [ ]
+listOfDrinks = [ ]
 
 drink = MixedDrink.new "Fluffy Ruffles"
 drink.garnish = "lemon or lime peel"
@@ -115,7 +115,7 @@ drink.addIngredient("red vermouth", 0.5)
 drink.addIngredient("ice", 3, "cubes")
 
 	# add the new drink to the list
-drink_list.push drink
+listOfDrinks.push drink
 
 
 drink = MixedDrink.new "Manhattan"
@@ -125,7 +125,7 @@ drink.addIngredient("red vermouth", 0.5)
 drink.addIngredient("ice", 3, "cubes")
 
 	# add the new drink to the list (alternate syntax)
-drink_list << drink
+listOfDrinks << drink
 
 drink = MixedDrink.new "Vodka Tonic"
 drink.garnish = "lime"
@@ -133,24 +133,24 @@ drink.addIngredient("vodka", 0.5)
 drink.addIngredient("tonic water", 5)
 drink.addIngredient("ice", 3, "cubes")
 
-drink_list << drink
+listOfDrinks << drink
 
 
 	# If we want to print out all of the drinks, we can use
 	# a loop
 	#
 	# As we know how many things are in the list at the beginnig
-	# of the loop (as we can ask using drink_list.length) we can
+	# of the loop (as we can ask using listOfDrinks.length) we can
 	# use a for loop
-for i in 0..drink_list.length-1
-	drink_list[i].prettyPrint
+for i in 0..listOfDrinks.length-1
+	listOfDrinks[i].prettyPrint
 	puts ""
 end
 
 	# an alternate way that we can set up a for loop in Ruby to
 	# do this kind of task is like this:
 	#
-	#	for d in drink_list
+	#	for d in listOfDrinks
 	#		d.prettyPrint
 	#		puts ""
 	#	end
@@ -159,7 +159,7 @@ end
 	# described after the "in" part of the for loop line.  In the first
 	# method, 'i' is taking on each of the values in a list of numbers
 	# (which we then use to look up the drinks).  In the second version,
-	# 'd' takes on each of the values in the list "drink_list", which
+	# 'd' takes on each of the values in the list "listOfDrinks", which
 	# are of course the values we look up in the first version.
 
 
