@@ -1,0 +1,66 @@
+#!/usr/bin/env ruby
+
+def createShuffledDeck()
+
+		# create our desired "shuffled" and temporary "unshuffled" arrays
+	shuffled = [ ]
+	unshuffled = [ ]
+
+		# put the cards in the unshuffled deck in order
+		# (with each of the cards having the right value)
+	for suit in 1..4
+			# figure out the hundreds part
+		suitvalue = suit * 100
+		for face in 1..13
+		card = suitvalue + face
+			unshuffled << card
+		end
+	end
+
+	puts "Before shuffling:"
+	puts "Unshuffled: #{unshuffled}"
+	puts "Shuffled  : #{shuffled}"
+
+		# create a "random number generator"
+		#
+		# if you want a random sequence that
+		# you can reproduce, try using
+		#   Random.new( aNumber )
+		# if you run the program again with
+		# the same value of "aNumber", you
+		# will get the same random sequence
+	rng = Random.new
+
+		# now shuffle the cards
+	while unshuffled.length > 0
+
+			# choose a card, any card
+		chosenIndex = rng.rand( unshuffled.length )
+
+			# this removes, from the array, the value at the
+			# specified index and places the value that was
+			# removed into "chosenCard"
+		chosenCard = unshuffled.delete_at(chosenIndex)
+
+			# add the card we chose into the "shuffled" array
+		shuffled << chosenCard
+	end
+
+	puts "After shuffling:"
+	puts "Unshuffled: #{unshuffled}"
+	puts "Shuffled  : #{shuffled}"
+
+		# the value that is returned from a Ruby function is
+		# the last value mentioned.  Sometimes people will
+		# actually say "return shuffled" here to be more
+		# explicit about what is happening
+	shuffled
+end
+
+
+shuffledCards = createShuffledDeck()
+
+
+p ""
+p shuffledCards
+p ""
