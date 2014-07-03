@@ -9,10 +9,10 @@ def createShuffledDeck()
 		# put the cards in the unshuffled deck in order
 		# (with each of the cards having the right value)
 	for suit in 1..4
-			# figure out the hundreds part
+			# figure out the hundreds/suit part
 		suitvalue = suit * 100
 		for face in 1..13
-		card = suitvalue + face
+			card = suitvalue + face
 			unshuffled << card
 		end
 	end
