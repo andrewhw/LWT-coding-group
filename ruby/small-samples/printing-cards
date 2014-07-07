@@ -1,0 +1,94 @@
+#!/usr/bin/env ruby
+
+#
+# An example using arrays to translate nicely from our encoding of the
+# card values...
+#
+
+# if we make an array where the value we want is handily at the right
+# location it makes printing really easy...  Notice that we put a
+# placeholder at location 0, as our logic starts counting at 1
+
+$CARD_SUIT = [ nil, "Clubs", "Diamonds", "Hearts", "Spades" ]
+$CARD_FACE = [ nil, "Ace",
+				"2", "3", "4", "5", "6", "7", "8", "9", "10",
+				"Jack", "Queen", "King" ]
+
+def cardName(cardValue)
+
+		# suit is value divided by 100
+	suit = cardValue / 100
+		# face is remainder if divided by 100
+	face = cardValue % 100
+
+	return "#{$CARD_FACE[face]} of #{$CARD_SUIT[suit]}"
+end
+
+
+def createShuffledDeck()
+
+		# create our desired "shuffled" and temporary "unshuffled" arrays
+	shuffled = [ ]
+	unshuffled = [ ]
+
+		# put the cards in the unshuffled deck in order
+		# (with each of the cards having the right value)
+	for suit in 1..4
+			# figure out the hundreds/suit part
+		suitvalue = suit * 100
+		for face in 1..13
+			card = suitvalue + face
+			unshuffled << card
+		end
+	end
+
+	puts "Before shuffling:"
+	puts "Unshuffled: #{unshuffled}"
+	puts "Shuffled  : #{shuffled}"
+
+		# create a "random number generator"
+		#
+		# if you want a random sequence that
+		# you can reproduce, try using
+		#   Random.new( aNumber )
+		# if you run the program again with
+		# the same value of "aNumber", you
+		# will get the same random sequence
+	rng = Random.new
+
+		# now shuffle the cards
+	while unshuffled.length > 0
+
+			# choose a card, any card
+		chosenIndex = rng.rand( unshuffled.length )
+
+			# this removes, from the array, the value at the
+			# specified index and places the value that was
+			# removed into "chosenCard"
+		chosenCard = unshuffled.delete_at(chosenIndex)
+
+			# add the card we chose into the "shuffled" array
+		shuffled << chosenCard
+	end
+
+	puts "After shuffling:"
+	puts "Unshuffled: #{unshuffled}"
+	puts "Shuffled  : #{shuffled}"
+
+		# the value that is returned from a Ruby function is
+		# the last value mentioned.  Sometimes people will
+		# actually say "return shuffled" here to be more
+		# explicit about what is happening
+	shuffled
+end
+
+
+deck = createShuffledDeck()
+
+
+puts ""
+puts "Cards in the deck:"
+for card in deck
+	puts "\t#{cardName(card)}"
+end
+
