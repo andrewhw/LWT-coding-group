@@ -101,7 +101,7 @@ puts ""
 
 anotherballoon = myballoon.clone
 
-anotherballoon = anotherbaloon * 12.5
+anotherballoon = anotherballoon * 12.5
 puts " (changing anotherballoon and myballoon...)"
 puts ""
 
