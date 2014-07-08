@@ -115,11 +115,11 @@ end
 	# and $PATTERN_CHARACTER_HI for the 0 and 1 data values
 def printpattern(pattern)
 
-	# We can use the for loop to iterate over the array.
-	# The range we want 'i' to take on starts at 0, but
-	# as "pattern.length" tells us how many elements are in
-	# "pattern", the range "0..pattern.length" would step
-	# us one position _past the end of the array_
+		# We can use the for loop to iterate over the array.
+		# The range we want 'i' to take on starts at 0, but
+		# as "pattern.length" tells us how many elements are in
+		# "pattern", the range "0..pattern.length" would step
+		# us one position _past the end of the array_
 
 	for i in 0..pattern.length-1
 		if pattern[i] == 0
