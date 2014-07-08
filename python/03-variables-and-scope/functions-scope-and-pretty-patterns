@@ -1,0 +1,221 @@
+#!/usr/bin/env python
+
+	# We will need the "system" tools when we want to print
+	# multiple times to the same line on the screen
+import sys
+
+
+	# The second confusion about variables has to do with where
+	# they are valid, and how to pass their values around.  This
+	# is such a big topic in computing that it has its own name,
+	# "scope" -- which basically means "where in the program the
+	# variable is valid".
+
+	# To talk about scope, we will need to have some functions,
+	# so I will first make a couple of functions (a function is
+	# just a named chunk of a program -- we can "call" the
+	# function and "pass in" some values (that may come from variables)
+	# and it can also "pass back" (or "return") some other values
+	# to us.
+
+	# This program pretty much just prints some pretty patterns on
+	# the screen, and they will move back and forth, so the first
+	# functions that we write will do the moving, then at the end
+	# of this file is the "main part" of the program that will
+	# cal the functions
+
+
+
+	# Because these variables are not inside any function, they
+	# will get set up as the script starts, and can be made available
+	# in any function in this program (a.k.a. "global variables").
+	# To do this, we indicate that they are "global" where we want
+	# to use them, as you can see in the printpattern() function
+	# below
+PATTERN_CHARACTER_LO = "."
+PATTERN_CHARACTER_HI = "#"
+
+
+
+	# shift the values in an array "up" (away from location 0)
+	# by a given amount
+def shiftUp(pattern, amountToShift, valueToFillIn):
+
+		# I'll write this one with a local variable 'i' that
+		# counts where we are moving our values _to_, and we
+		# can subtract "amountToShift" to determine where we
+		# should be reading the values _from_.
+		# Note that we are starting here from the "high" end
+		# of the array, and therefore counting down.
+		#
+		# We are counting _down_ essentially because we want
+		# to move the array contents _up_ -- so we start at
+		# the end with the values we will overwrite, and move
+		# the elements up into the "gap" that we are creating
+		# as we move things along.  At the end will will have
+		# lost some of the values at the top end (the number of
+		# values is the amount in "amountToShift"), and then
+		# at the bottom end we will still have old copies
+		# around of the first "amountToShift" number of values
+
+	i = len(pattern)-1
+	while i >= amountToShift:
+
+		pattern[i] = pattern[i-amountToShift]
+		i = i - 1
+
+
+		# now we fill in the values at the bottom end that are
+		# otherwise empty; and we can keep rolling along using
+		# 'i' as it already has the value of 'amountToShift'
+		# after the previous loop ends
+	while i >= 0:
+
+		pattern[i] = valueToFillIn
+		i = i - 1
+
+
+
+
+	# shift the values in an array "down" (towards location 0)
+	# by a given amount
+def shiftDown(pattern, amountToShift, valueToFillIn):
+
+		# The idea of moving along through a sequence is
+		# so common, programming languages provide a "for
+		# loop" specifically for this purpose.  This does
+		# the same work as the while loop shown here:
+		#
+		#	i = 0
+		#	while i < highestValueToMove:
+		#		pattern[i] = pattern[i+amountToShift]
+		#		i = i + 1
+		#
+		# The big difference is that we lay out the full
+		# sequence we will move 'i' through in the line
+		# the "for" is on ... and then we don't have to
+		# increment 'i' ourselves
+		#
+		# A Python "for loop" that is used for counting
+		# like this typically uses the function
+		#     range(beginAt,stopBefore)
+		# that produces a list of numbers.  The first
+		# argument tells range where to begin counting,
+		# and the second tells it when to stop, so if you
+		# were to call
+		#      range(0,5)
+		# this would produce a list
+		#      [0, 1, 2, 3, 4]
+		#
+		# All the for loop does is run through the list
+		# that is provided by range(...), with the variable
+		# (in this case, "i"), set to each of the values
+		# in the list, in turn -- so
+		#      for i in range(0,3):
+		# would make "i" take on each of the values 0, 1 and 2
+		#
+	highestValueToMove = len(pattern) - amountToShift
+	for i in range(0,highestValueToMove):
+		pattern[i] = pattern[i+amountToShift]
+
+		# again, we want to keep going, filling in values
+		# in the region we have moved the values down from
+	for i in range(highestValueToMove,len(pattern)):
+		pattern[i] = valueToFillIn
+
+
+
+
+
+	
+	# this function will print out the pattern, using the
+	# value in the global variables PATTERN_CHARACTER_LO
+	# and PATTERN_CHARACTER_HI for the 0 and 1 data values
+def printpattern(pattern):
+
+		# We say "global" here to indicate that these
+		# variables are the same as the ones declared
+		# outside of any of the functions
+	global PATTERN_CHARACTER_LO
+	global PATTERN_CHARACTER_HI
+
+		# We can use the for loop to iterate over the array.
+		# The range we want 'i' to take on starts at 0, but
+		# as "len(pattern)" tells us how many elements are in
+		# "pattern", the "range(0,len(pattern))" steps us
+		# exactly _to_ the end of the array as range counts
+		# _up to, but not including_ the second argument
+		#
+		# If the pattern is of length 4, then the values are
+		# at locations 0, 1, 2 and 3 -- and the expression
+		#     range(0,4)
+		# produces the list
+		#     [ 0, 1, 2, 3 ]
+		#
+	for i in range(0,len(pattern)):
+		if pattern[i] == 0:
+			character = PATTERN_CHARACTER_LO
+		else:
+			character = PATTERN_CHARACTER_HI
+
+		# now that we have the character, we want to print it
+		# on the screen, but we don't want to use "print" as
+		# this will put a newline after each character.  We
+		# can get much more precise formatting by using the
+		# function "write" on the "standard output stream",
+		# which is just a fancy way of saying "the sequence
+		# of characters that get put on the screen
+
+		sys.stdout.write(character)
+
+	# as "write" doesn't print a newline after its value, we
+	# get all the characters above printed on the same line,
+	# but now we need to manually add the newline at the end
+	sys.stdout.write("\n")
+	
+
+
+
+
+	##
+	## Beginning of the program
+	##
+
+prettyPattern = [	0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
+					1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+					1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+					1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
+					1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0	]
+
+print "Pretty patterns using characters", PATTERN_CHARACTER_LO, "and", PATTERN_CHARACTER_HI
+
+printpattern(prettyPattern)
+
+	# Note that we are using a different variable called 'i' here,
+	# so that even though both "shiftUp" and "printpattern" use an
+	# 'i' variable -- it is a different (local) 'i' variable
+	#
+	# Also, notice that the reason that shiftUp can change the values
+	# in "prettyPattern" is because of the "balloons-on-a-string" type
+	# handle means that while "shiftUp" is running, there are two
+	# handles to the same array (one called "prettyPattern", here, and
+	# one in the function, called "pattern")
+	#
+	# Both of the handles are "local variables", but the same data is
+	# what is actually referenced by both of the handles
+for i in range(0,6):
+	shiftDown(prettyPattern, 1, 0)
+	printpattern(prettyPattern)
+
+for i in range(0,6):
+	shiftUp(prettyPattern, 2, 0)
+	printpattern(prettyPattern)
+
+for i in range(0,5):
+	shiftDown(prettyPattern, 3, 0)
+	printpattern(prettyPattern)
+
+for i in range(0,5):
+	shiftUp(prettyPattern, 2, 1)
+	printpattern(prettyPattern)
+

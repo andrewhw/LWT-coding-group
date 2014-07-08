@@ -1,0 +1,117 @@
+#!/usr/bin/env python
+
+	# This says that we want to be able to use the tools in the "copy"
+	# library (we will use this to make a "deep copy", near the bottom
+	# of the example)
+import copy
+
+
+	# This will show some data stored in different variables, and
+	# I hope will demonstrate one of the common issues people have,
+	# which is the difference between "a variable" and "the value
+	# it contains.
+	#
+	# In Python (and in all other common scripting languages), there
+	# are really two different parts to a variable -- the "handle",
+	# which is the part that has the name, and the value, which is
+	# "attached" to the handle in much the same way that a balloon
+	# would be attached to a string.
+
+	# Say you have a variable, "myballoon" that has a value that
+	# itself contains things (I'm using an array here for this
+	# purpose):
+myballoon = [ "this", "is", "my", "value" ]
+
+print "STEP 1: myballoon   value: ", myballoon
+print ""
+
+
+	# Confusion frequently arises as one would assume that assigning
+	# the value of "myballoon" to "yourballoon" would generate us
+	# the equivalent of a new balloon attached to a new handle...
+yourballoon = myballoon
+
+	# ... but it doesn't.  Instead, what we have is a second handle
+	# attached to the same balloon.  We can see this if we try and
+	# change the value of the "my" string at location [2] (the third
+	# string in zero-based numbering) in "yourballoon"...
+yourballoon[2] = "your"
+print " (changing yourballoon...)"
+print ""
+
+print "STEP 2: myballoon   value: ", myballoon
+print "STEP 2: yourballoon value: ", yourballoon
+print ""
+
+
+	# If we really want to get a whole new balloon, we need to
+	# "deep copy" it.  (Some languages and some authors call this a
+	# "clone").  The general idea is that we go through all
+	# of the bits in the "value" and make a whole fresh copy:
+anotherballoon = copy.deepcopy(myballoon)
+
+	# changing the string at location [2] again, but in the clone
+anotherballoon[2] = "another"
+myballoon[2] = "some kind of"
+print " (changing anotherballoon and myballoon...)"
+print ""
+
+print "STEP 3: myballoon      value: ", myballoon
+print "STEP 3: yourballoon    value: ", yourballoon
+print "STEP 3: anotherballoon value: ", anotherballoon
+
+print ""
+print " Starting again with simple numeric values"
+print ""
+
+
+
+	# But if we try this without the array, none of this
+	# happens.  Notice here that we are taking the same
+	# handle, "myballoon", that was just attached to an
+	# array, and instead we are attaching it to a simple
+	# number.  Same handle, but now a different (and much
+	# simpler) balloon:
+myballoon = 12345
+print "STEP 1: myballoon   value: ", myballoon
+
+yourballoon = myballoon
+
+yourballoon = yourballoon * 1.25
+print " (changing yourballoon...)"
+print ""
+
+print "STEP 2: myballoon   value: ", myballoon
+print "STEP 2: yourballoon value: ", yourballoon
+print ""
+
+	# So why is this different?
+	#
+	# This is all because the array is a _container_ -- that
+	# is, it contains other values (that can themselves be
+	# containers, etc).  When Ruby goes to do the assignment,
+	# it attempts to avoid doing all the work of copying
+	# everything, which could be a lot of work (and work that 
+	# might be for nothing).
+
+	# Since in the second example we are not talking about
+	# containers, so therefore we are creating another handle
+	# to a "simple type", and when these get changed, we
+	# effectively get a new balloon attached to our handle
+	# with the new value.
+
+
+	# In python (in contrast to Ruby), we can "deep copy"
+	# anything, regardless of how simple it is -- the companion
+	# Ruby example crashes when we try this, but this example
+	# is fine...
+anotherballoon = copy.deepcopy(myballoon)
+
+anotherballoon = anotherballoon * 12.5
+print " (changing anotherballoon and myballoon...)"
+print ""
+
+print "STEP 3: myballoon      value: ", myballoon
+print "STEP 3: yourballoon    value: ", yourballoon
+print "STEP 3: anotherballoon value: ", anotherballoon
+
