@@ -121,7 +121,7 @@ drinkNameHash[drink.name] = drink
 
 
 keyToLookUp = "Vodka Tonic"
-puts "Looking up a "#{keyToLookUp} in our name hash..."
+puts "Looking up a '#{keyToLookUp}' in our name hash..."
 
 	# use the string in "keyToLookUp" as the key
 	# to look our drink up
