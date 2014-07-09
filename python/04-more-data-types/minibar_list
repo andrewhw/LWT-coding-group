@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+	# import the "system" tools, so that we can use
+	# sys.stdout.write(...)
 import sys
 
 	# This example rewrites our "Fluffy Ruffles" example as
