@@ -1,0 +1,215 @@
+#!/usr/bin/env python
+
+import sys
+
+	# This example extends "minibar_hash_name" to include
+	# name based lookup using "Hash" structures when the
+	# keys may not be unique
+	#
+	# The Big Idea...
+	#
+	# Most scripting languages don't let you have duplicate
+	# keys, and Python is no exception, so the trick is to put
+	# some kind of container into the "hash" as the item looked
+	# up by key -- and then put your items into the container.
+	#
+	# I'm just going to use arrays here as the container, but
+	# you could use another hash, or really anything that
+	# you think works best for your needs
+
+	# There is one new function in this file:
+	#	addDrinkToHashes
+	# that puts the drink into the two hashes
+
+
+	# "MixedDrink" will be the object describing each drink
+class MixedDrink:
+
+		# create a new object of this type -- we will add the
+		# ingredients to it after creating it by name
+	def __init__(self, name):
+
+		self.name = name
+
+			# empty array for the ingredients
+		self.ingredient = []
+
+			# "inner class" for the ingredients
+	class Ingredient:
+
+		def __init__(self, name, amount, units):
+			self.name = name
+			self.amount = amount
+			self.units = units
+
+		# add an ingredient to our array of ingredients;
+		# we must supply a description and amount, but
+		# the "unit" variable has a default of "oz"
+	def addIngredient(self, description, amount, unit="oz"):
+
+		self.ingredient.append( MixedDrink.Ingredient(description, amount, unit) )
+
+
+		# print out the drink, nicely
+	def prettyPrint(self):
+		sys.stdout.write("'%s' : %d ingredients\n" %
+				(self.name, len(self.ingredient)))
+		for i in range(0, len(self.ingredient)):
+			sys.stdout.write("  %s %s %s\n" %
+					(self.ingredient[i].amount, self.ingredient[i].units,
+						self.ingredient[i].name))
+
+			# if we have a garnish, then print it
+		if self.garnish:
+			sys.stdout.write("  Garnish with %s\n" % self.garnish)
+
+
+
+	# add the drink to the two supplied hashes,
+	# the first by name, the second by ingredient.
+	#
+	# The first hash assumes that there are no duplicates,
+	# so it is simply a straightforward key/value hash,
+	# but the second one is a key/container hash, and
+	# we put the ingredients into the container
+def addDrinkToHashes(nameHash, ingredientHash, drink):
+
+		# this one is easy, as we just install the
+		# value into the hash
+	nameHash[drink.name] = drink
+
+		# this one is more complicated, as we need to
+		# find out if there is a container already
+		# that we are adding to, and if not, install
+		# a new empty container with our value in it
+		# ... and we are doing this for each ingredient
+		# named in the drink
+	for i in drink.ingredient:
+
+			#
+		try:
+			iContainer = ingredientHash[ i.name ]
+			iContainer.append(drink)
+		except KeyError:
+			# we will arrive here if our attempt
+			# to access the hash using 'i.name'
+			# failed, so now we create a container,
+			# add the drink to it, and install
+			# _that_ into the hash
+			iContainer = []
+			iContainer.append(drink)
+			ingredientHash[ i.name ] = iContainer
+
+
+	# here is the main part of the program -- we make an
+	# empty hash for looking up by name, and a separate one
+	# for looking up by ingredient, and the add the drinks
+	# to each of them name as we go, using the appropriate
+	# keys
+
+drinkNameHash = { }
+drinkIngredientHash = { }
+
+drink = MixedDrink("Fluffy Ruffles")
+drink.garnish = "lemon or lime peel"
+drink.addIngredient("rum", 0.5)
+drink.addIngredient("red vermouth", 0.5)
+drink.addIngredient("ice", 3, "cubes")
+
+	# add the new drink to the list -- here "drink.name"
+	# will be the name we gave the drink, and "drink" is
+	# the drink itself
+addDrinkToHashes(drinkNameHash, drinkIngredientHash, drink)
+
+
+
+drink = MixedDrink("Manhattan")
+drink.garnish = "maraschino cherry"
+drink.addIngredient("whisky (usually bourbon)", 0.5)
+drink.addIngredient("red vermouth", 0.5)
+drink.addIngredient("ice", 3, "cubes")
+
+addDrinkToHashes(drinkNameHash, drinkIngredientHash, drink)
+
+
+
+drink = MixedDrink("Vodka Tonic")
+drink.garnish = "lime"
+drink.addIngredient("vodka", 0.5)
+drink.addIngredient("tonic water", 5)
+drink.addIngredient("ice", 3, "cubes")
+
+addDrinkToHashes(drinkNameHash, drinkIngredientHash, drink)
+
+
+keyToLookUp = "Vodka Tonic"
+sys.stdout.write("Looking up a '%s' in our name hash...\n" % keyToLookUp)
+
+	# use the string in "keyToLookUp" as the key
+	# to look our drink up
+
+drinkFound = drinkNameHash[ keyToLookUp ]
+if drinkFound:
+	sys.stdout.write("Found '%s':\n" % keyToLookUp)
+	drinkFound.prettyPrint()
+else:
+	sys.stdout.write("Drink '%s' not found...\n" % keyToLookUp)
+
+
+sys.stdout.write("\n")
+sys.stdout.write("\n")
+
+
+	# look up an ingredient that only occurs in one drink...
+
+keyToLookUp = "rum"
+sys.stdout.write("Looking up '%s' in our ingredient hash...\n" % keyToLookUp)
+
+try:
+	drinkFoundContainer = drinkIngredientHash[ keyToLookUp ]
+	sys.stdout.write("%d drinks contain '%s':\n" % (len(drinkFoundContainer), keyToLookUp))
+	for d in drinkFoundContainer:
+		d.prettyPrint()
+		sys.stdout.write("\n")
+except KeyError:
+	sys.stdout.write("No drinks contain '%s'...\n" % keyToLookUp)
+
+
+sys.stdout.write("\n")
+sys.stdout.write("\n")
+
+
+	# look up an ingredient that occurs in more than one drink...
+
+keyToLookUp = "ice"
+sys.stdout.write("Looking up '%s' in our ingredient hash...\n" % keyToLookUp)
+
+try:
+	drinkFoundContainer = drinkIngredientHash[ keyToLookUp ]
+	sys.stdout.write("%d drinks contain '%s':\n" % (len(drinkFoundContainer), keyToLookUp))
+	for d in drinkFoundContainer:
+		d.prettyPrint()
+		sys.stdout.write("\n")
+except KeyError:
+	sys.stdout.write("No drinks contain '%s'...\n" % keyToLookUp)
+
+
+sys.stdout.write("\n")
+sys.stdout.write("\n")
+
+
+	# look up an ingredient that occurs in no drinks at all...
+
+keyToLookUp = "brandy"
+sys.stdout.write("Looking up '%s' in our ingredient hash...\n" % keyToLookUp)
+
+try:
+	drinkFoundContainer = drinkIngredientHash[ keyToLookUp ]
+	sys.stdout.write("%d drinks contain '%s':\n" % (len(drinkFoundContainer), keyToLookUp))
+	for d in drinkFoundContainer:
+		d.prettyPrint()
+		sys.stdout.write("\n")
+except KeyError:
+	sys.stdout.write("No drinks contain '%s'...\n" % keyToLookUp)
+
+
