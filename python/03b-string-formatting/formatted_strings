@@ -1,0 +1,106 @@
+#!/usr/bin/env python
+
+	# This example is to show how we can make up nicely
+	# formatted strings in Python.
+
+	# Python has taken its string formatting idea from
+	# the language "C", in particular from the function
+	# in C that prints formatted strings "printf()".
+	#
+	# If you look up printf(), you will find lots and lots
+	# of examples, but I want to show you how to get the
+	# bulk of what you will need done.
+
+	# The first thing to know about this "printf" like
+	# formatting plan is that although it looks very strange
+	# and even complicated at first, once you know the basic
+	# structure, it actually works in pretty intuitive ways.
+
+	# The idea is that we want to be able to combine some
+	# arbitrary text with some data.  For instance, something
+	# like
+	#    "I have <SOMENUMBER> great books to read"
+	# being converted to
+	#    "I have 5 great books to read"
+	# or
+	#    "I will be at my aunt <INSERT_NAME_HERE>'s house"
+	# 
+	# It would be nice if whatever scheme we have would allow
+	# us to control spaces around our data too, so that we can
+	# line things up nicely, and make tables like this:
+	#
+	# Player  1: Adalia      Purple Team
+	# Player  2: Bintang        Red Team
+	# Player  3: Christal      Blue Team
+	# ...
+	# Player  9: Ines         Green Team
+	# Player 10: Joanna     Magenta Team
+
+	# We can do all of these things.  We use a "format specifier"
+	# (which is an '%' character, a optional width, and a letter
+	# indicating what kind of data we will put in) as the placeholder
+	# in our "format string".  We can then combine the format string
+	# and the data to put in place of each placeholder using the
+	# operator '%', like this:
+
+	# %i - integer number (also %d for historical reasons -- people
+	# use both, and they pretty much do the same thing)
+print "I have %i great books to read" % 5
+print "I have %d great books to read" % 6
+
+print "I will be at my aunt %s's house" % "Heather"
+
+
+	# if we have more than one substitution to make, then we put all
+	# of the data together into a tuple:
+
+print "Of my %i favourite books, I have read %s most recently" % (10, "the dictionary")
+
+
+	# if there is a number between the % and the letter, it is used as a
+	# minimum width that the data should take up -- a negative number
+	# simply pads from the other side
+
+print "Player %2d: %10s %-8s team" % (9, "Ines", "Green")
+
+	# if we have a "floating point" number (a number with a dot in it,
+	# that "floats around"), then we can specify both a length and a
+	# precision -- the length is the total number of characters wide
+	# the number should take up, and the precision is the number of
+	# characters (digits) after the decimal place
+pi = 3.1415926
+big = 1234.56789
+
+print "pi is %f" % pi
+print "pi is %4.2f"
+print "pi is %8.3f" % pi
+print "pi is %15.12f" % pi
+
+print "big is %f" % big
+print "big is %4.2f" % big
+print "big is %8.3f" % big
+print "big is %15.12f" % big
+
+
+	# If we had the following list of data describing players
+	# names, teams, and times, we could do something like this:
+
+players = [ 	( "Adalia", "Purple", 2.5	),
+				( "Bintang", "Red", 2.75	),
+				( "Christal", "Blue", 1.95	),
+				( "Dolores", "Green", 2.5	),
+				( "Elisapie", "Magenta", 2.5	),
+				( "Fahimeh", "Purple", 2.5	),
+				( "Germaine", "Red", 2.5	),
+				( "Hellena", "Blue", 2.5	),
+				( "Ines", "Green", 2.25	),
+				( "Joanna", "Magenta", 1.95	) ]
+
+print ""
+print "Player list:"
+for i in range(0, len(players)):
+	( playerName, teamName, playerBestTime ) = players[i]
+	formattedString = "%10s %-8s team: best %4.2f" % (playerName, teamName, playerBestTime)
+
+	print "Player %2d : %s" % (i, formattedString)
+
