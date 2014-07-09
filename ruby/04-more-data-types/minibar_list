@@ -17,8 +17,22 @@
 	# which (very confusingly) is used to mean _different_ things
 	# at different times))
 
-	# "MixedDrink" will be the name of our new type, which
-	# we will use to create these things
+	# "MixedDrink" will be the name of our new "object" type, which
+	# we will use to create these things.  It will be an "object"
+	# because it will be a collection of other variables, "name",
+	# "ingredient" and "garnish".  The "name" and "garnish" parts
+	# will simply contain strings, while "ingredient" will be a list.
+	#
+	# The things in the "ingredient" list will actually be other
+	# objects -- we will define these using the name "Ingredient",
+	# which in turn will each have variables "name", "amount" and "units"
+	# which are all strings.
+	#
+	# You could say then that:
+	#   A Mixed drink has a name, a list of ingredients, and an optional
+	#   garnish.  Each of the ingredients in the list has a name, an
+	#   amount, and units describing them.
+	#
 class MixedDrink
 
 		# this makes our instance variables "@name" and "@ingredient"
@@ -41,6 +55,14 @@ class MixedDrink
 
 			# note that "@name" is a variable that is part of our
 			# new object type, "name" is the argument variable
+			#
+			# This line therefore takes the value in our argument
+			# (the argument variable called "name") and stores it
+			# into the instance variable (or "data member") called
+			# name that is part of a MixedDrink object.  If you
+			# assign a value to an "instance variable" that doesn't
+			# exist yet, Ruby creates one, just as it does for
+			# other variables.
 		@name = name
 
 			# here we make a new array, but don't put anything in
@@ -61,6 +83,7 @@ class MixedDrink
 			# and the whole world
 		attr_reader :name, :amount, :units
 
+			# this method sets up an Ingredient object
 		def initialize(name, amount, units)
 			@name = name
 			@amount = amount
@@ -89,10 +112,22 @@ class MixedDrink
 	def prettyPrint
 		puts "'#{@name}' : #{@ingredient.length} ingredients"
 
+			# The 0..X operator generates a list that contains
+			# integers starting at 0 and going up to and including
+			# "X", so
+			#     0..4
+			# produces the list
+			#     [ 0, 1, 2, 3, 4 ]
+			#
+			# The "for loop" here therefore will run as many times
+			# as the "@ingredient" list has items, and "i" will
+			# take on the values 0, 1, 2... in turn
+			#
 		for i in 0..@ingredient.length-1
 			puts "  #{@ingredient[i].amount} #{@ingredient[i].units} #{@ingredient[i].name}"
 		end
 
+			# if we have a garnish, then print it
 		if @garnish
 			puts "  Garnish with #{@garnish}"
 		end
