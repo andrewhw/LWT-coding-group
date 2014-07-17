@@ -1,0 +1,142 @@
+#!/usr/bin/env ruby
+
+#
+# An example using arrays to translate nicely from our encoding of the
+# card values...
+#
+
+# if we make an array where the value we want is handily at the right
+# location it makes printing really easy...  Notice that we put a
+# placeholder at location 0, as our logic starts counting at 1
+
+$CARD_SUIT = [ nil, "Clubs", "Diamonds", "Hearts", "Spades" ]
+$CARD_FACE = [ nil, "Ace",
+				"2", "3", "4", "5", "6", "7", "8", "9", "10",
+				"Jack", "Queen", "King" ]
+
+def cardName(cardValue)
+
+		# suit is value divided by 100
+	suit = cardValue / 100
+		# face is remainder if divided by 100
+	face = cardValue % 100
+
+	return "#{$CARD_FACE[face]} of #{$CARD_SUIT[suit]}"
+end
+
+def handAsString(listOfCards)
+		# start with an empty string and then build it up
+	handString = ""
+
+		# make a clone so that we can take cards out of a private list
+	myList = listOfCards.clone
+
+	while myList.length > 0
+		card = myList.pop
+
+		if handString == ""
+				# if first one, just plunk in the card
+			handString = cardName(card)
+		else
+				# if after the first one, add in a comma, then the new card
+			handString = "#{handString}, #{cardName(card)}"
+		end
+	end
+
+		# indicate what should be coming back from this function
+	return handString
+end
+
+
+def createShuffledDeck()
+
+		# create our desired "shuffled" and temporary "unshuffled" arrays
+	shuffled = [ ]
+	unshuffled = [ ]
+
+		# put the cards in the unshuffled deck in order
+		# (with each of the cards having the right value)
+	for suit in 1..4
+			# figure out the hundreds/suit part
+		suitvalue = suit * 100
+		for face in 1..13
+			card = suitvalue + face
+			unshuffled << card
+		end
+	end
+
+	puts "Before shuffling:"
+	puts "Unshuffled: #{unshuffled}"
+	puts "Shuffled  : #{shuffled}"
+
+		# create a "random number generator"
+		#
+		# if you want a random sequence that
+		# you can reproduce, try using
+		#   Random.new( aNumber )
+		# if you run the program again with
+		# the same value of "aNumber", you
+		# will get the same random sequence
+	rng = Random.new
+
+		# now shuffle the cards
+	while unshuffled.length > 0
+
+			# choose a card, any card
+		chosenIndex = rng.rand( unshuffled.length )
+
+			# this removes, from the array, the value at the
+			# specified index and places the value that was
+			# removed into "chosenCard"
+		chosenCard = unshuffled.delete_at(chosenIndex)
+
+			# add the card we chose into the "shuffled" array
+		shuffled << chosenCard
+	end
+
+	puts "After shuffling:"
+	puts "Unshuffled: #{unshuffled}"
+	puts "Shuffled  : #{shuffled}"
+
+		# the value that is returned from a Ruby function is
+		# the last value mentioned.  Sometimes people will
+		# actually say "return shuffled" here to be more
+		# explicit about what is happening
+	shuffled
+end
+
+
+deck = createShuffledDeck()
+
+
+	# create some lists to act as the dealt hands
+north_hand = []
+east_hand = []
+south_hand = []
+west_hand = []
+
+
+	# deal out 5 cards to each hand
+for round in 1..5
+	north_hand << deck.pop
+	east_hand << deck.pop
+	south_hand << deck.pop
+	west_hand << deck.pop
+end
+
+puts ""
+puts "Hands dealt out:"
+puts "	North:"
+puts "		#{handAsString(north_hand)}"
+puts "	East:"
+puts "		#{handAsString(east_hand)}"
+puts "	South:"
+puts "		#{handAsString(south_hand)}"
+puts "	West:"
+puts "		#{handAsString(west_hand)}"
+
+puts ""
+puts "Cards remaining in the deck:"
+for card in deck
+	puts "\t#{cardName(card)}"
+end
