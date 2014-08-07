@@ -33,6 +33,35 @@ def createShuffledDeck()
 
 		# put the cards in the unshuffled deck in order
 		# (with each of the cards having the right value)
+		#
+		# we will set them up so that the cards fall into
+		# the following ranges:
+		# 100s : clubs
+		#    101 -- ace of clubs
+		#    102 -- two of clubs
+		#     ...
+		#    110 -- ten of clubs
+		#    111 -- jack of clubs
+		#    112 -- queen of clubs
+		#    113 -- king of clubs
+		# 200s : diamonds
+		#    201 -- ace of diamonds
+		#    202 -- two of diamonds
+		#     ...
+		#    213 -- king of diamonds
+		# 300s : hearts
+		#    301 -- ace of hearts
+		#     ...
+		#    313 -- king of hearts
+		# 400s : spades
+		#    401 -- ace of spades
+		#     ...
+		#    413 -- king of diamonds
+		#
+		# the loops here do this -- the outer one gets us
+		# the 100, 200, 300, 400, and the inner one gets
+		# us the 1..13, which we then add on to the hundreds
+		# part
 	for suit in 1..4
 			# figure out the hundreds/suit part
 		suitvalue = suit * 100
