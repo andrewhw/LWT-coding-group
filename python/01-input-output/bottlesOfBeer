@@ -1,14 +1,7 @@
 #!/usr/bin/env python
 
-	# the above is a little bit of "magic" to tell a Unix/Linux
-	# style machine that this is a Python program.
-
-	# the "#!" as the first two characters of the file are actually
-	# called "the magic"; the rest of the line indicates that the
-	# program /usr/bin/env should be called up with the value "python";
-	# the "env" program then looks in likely places on the system for
-	# the program "python", and assuming it is found, gets "python"
-	# to run the rest of the commands in this file
+	# We put this first line to tell the operating system to
+	# run this script as a python program.
 
 
 

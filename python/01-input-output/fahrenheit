@@ -11,7 +11,7 @@ import string, sys
 	# with a 'q'
 
 
-	# read a line from "standard input"
+	# read a line from "standard input" -- also known as "the keyboard"
 line = sys.stdin.readline()
 
 	# loop based on the number of characters in the line -- notice
