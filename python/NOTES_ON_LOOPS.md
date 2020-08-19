@@ -28,7 +28,7 @@ You might want to run a really simple for loop by itself, too, to
 see what it does by itself -- something like:
 
 	for counter in range(5,12):
-		print counter
+		print(counter)
 
 You can put any numbers that you like in the sequence part -- as you
 can see, Python will count from one up until it gets to the other,

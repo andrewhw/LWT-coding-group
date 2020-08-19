@@ -11,16 +11,16 @@ while numberOfBottles > 0:
 		bottleOrBottles="bottles"
 
 
-	print "There are", numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf, "on the wall,"
-	print numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf
-	print "If one of those bottles should happen to fall, we'd have"
+	print("There are", numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf, "on the wall,")
+	print(numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf)
+	print("If one of those bottles should happen to fall, we'd have")
 
 	numberOfBottles = numberOfBottles - 1
 
-	print numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf, "on the wall!"
+	print(numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf, "on the wall!")
 
-	print ""
+	print("")
 
 
-print "What a mess -- and a waste of ", whatTheyAreBottlesOf, "!"
+print("What a mess -- and a waste of ", whatTheyAreBottlesOf, "!")
 

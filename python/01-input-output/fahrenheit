@@ -35,10 +35,10 @@ while len(line) > 0:
 	try: 
 		celsius = float(line)
 	except ValueError:
-		print "That didn't seem to be a numeric value"
+		print("That didn't seem to be a numeric value")
 	else:
 		fahrenheit = (celsius * 9.0/5.0) + 32
-		print '%.2fC = %.2fF' % (celsius, fahrenheit)
+		print('%.2fC = %.2fF' % (celsius, fahrenheit))
 
 		# read the next line
 	line = sys.stdin.readline()

@@ -66,8 +66,8 @@ while numberOfBottles > 0:
 
 
 		# each of these commands produces one line of output on the terminal
-	print "There are", numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf, "on the wall,"
-	print numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf
+	print("There are", numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf, "on the wall,")
+	print(numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf)
 
 		# The "print" operation wants a comma-separated list of items
 		# that it is supposed to print out.  It will convert them into
@@ -75,18 +75,18 @@ while numberOfBottles > 0:
 		# Python is running in)
 
 
-	print "If one of those bottles should happen to fall, we'd have"
+	print("If one of those bottles should happen to fall, we'd have")
 
 		## adjust the value of the variable
 	numberOfBottles = numberOfBottles - 1
 
 
-	print numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf, "on the wall!"
+	print(numberOfBottles, bottleOrBottles, "of", whatTheyAreBottlesOf, "on the wall!")
 
 		## print a blank line, just for spacing
-	print ""
+	print("")
 
 
 	# Since the below line is not indented, it is _not_ part of the loop
-print "What a mess -- and a waste of ", whatTheyAreBottlesOf, "!"
+print("What a mess -- and a waste of ", whatTheyAreBottlesOf, "!")
 

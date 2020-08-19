@@ -45,23 +45,23 @@
 
 	# %i - integer number (also %d for historical reasons -- people
 	# use both, and they pretty much do the same thing)
-print "I have %i great books to read" % 5
-print "I have %d great books to read" % 6
+print("I have %i great books to read" % 5)
+print("I have %d great books to read" % 6)
 
-print "I will be at my aunt %s's house" % "Heather"
+print("I will be at my aunt %s's house" % "Heather")
 
 
 	# if we have more than one substitution to make, then we put all
 	# of the data together into a tuple:
 
-print "Of my %i favourite books, I have read %s most recently" % (10, "the dictionary")
+print("Of my %i favourite books, I have read %s most recently" % (10, "the dictionary"))
 
 
 	# if there is a number between the % and the letter, it is used as a
 	# minimum width that the data should take up -- a negative number
 	# simply pads from the other side
 
-print "Player %2d: %10s %-8s team" % (9, "Ines", "Green")
+print("Player %2d: %10s %-8s team" % (9, "Ines", "Green"))
 
 	# if we have a "floating point" number (a number with a dot in it,
 	# that "floats around"), then we can specify both a length and a
@@ -71,15 +71,15 @@ print "Player %2d: %10s %-8s team" % (9, "Ines", "Green")
 pi = 3.1415926
 big = 1234.56789
 
-print "pi is %f" % pi
-print "pi is %4.2f"
-print "pi is %8.3f" % pi
-print "pi is %15.12f" % pi
+print("pi is %f" % pi)
+print("pi is %4.2f" % pi)
+print("pi is %8.3f" % pi
+print("pi is %15.12f" % pi)
 
-print "big is %f" % big
-print "big is %4.2f" % big
-print "big is %8.3f" % big
-print "big is %15.12f" % big
+print("big is %f" % big)
+print("big is %4.2f" % big)
+print("big is %8.3f" % big)
+print("big is %15.12f" % big)
 
 
 	# If we had the following list of data describing players
@@ -96,11 +96,11 @@ players = [ 	( "Adalia", "Purple", 2.5	),
 				( "Ines", "Green", 2.25	),
 				( "Joanna", "Magenta", 1.95	) ]
 
-print ""
-print "Player list:"
+print("")
+print("Player list:")
 for i in range(0, len(players)):
 	( playerName, teamName, playerBestTime ) = players[i]
 	formattedString = "%10s %-8s team: best %4.2f" % (playerName, teamName, playerBestTime)
 
-	print "Player %2d : %s" % (i, formattedString)
+	print("Player %2d : %s" % (i, formattedString))
 

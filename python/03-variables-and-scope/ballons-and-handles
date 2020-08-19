@@ -22,8 +22,8 @@ import copy
 	# purpose):
 myballoon = [ "this", "is", "my", "value" ]
 
-print "STEP 1: myballoon   value: ", myballoon
-print ""
+print("STEP 1: myballoon   value: ", myballoon)
+print("")
 
 
 	# Confusion frequently arises as one would assume that assigning
@@ -36,12 +36,12 @@ yourballoon = myballoon
 	# change the value of the "my" string at location [2] (the third
 	# string in zero-based numbering) in "yourballoon"...
 yourballoon[2] = "your"
-print " (changing yourballoon...)"
-print ""
+print(" (changing yourballoon...)")
+print("")
 
-print "STEP 2: myballoon   value: ", myballoon
-print "STEP 2: yourballoon value: ", yourballoon
-print ""
+print("STEP 2: myballoon   value: ", myballoon)
+print("STEP 2: yourballoon value: ", yourballoon)
+print("")
 
 
 	# If we really want to get a whole new balloon, we need to
@@ -53,16 +53,16 @@ anotherballoon = copy.deepcopy(myballoon)
 	# changing the string at location [2] again, but in the clone
 anotherballoon[2] = "another"
 myballoon[2] = "some kind of"
-print " (changing anotherballoon and myballoon...)"
-print ""
+print(" (changing anotherballoon and myballoon...)")
+print(""
 
-print "STEP 3: myballoon      value: ", myballoon
-print "STEP 3: yourballoon    value: ", yourballoon
-print "STEP 3: anotherballoon value: ", anotherballoon
+print("STEP 3: myballoon      value: ", myballoon)
+print("STEP 3: yourballoon    value: ", yourballoon)
+print("STEP 3: anotherballoon value: ", anotherballoon)
 
-print ""
-print " Starting again with simple numeric values"
-print ""
+print("")
+print(" Starting again with simple numeric values")
+print("")
 
 
 
@@ -73,17 +73,17 @@ print ""
 	# number.  Same handle, but now a different (and much
 	# simpler) balloon:
 myballoon = 12345
-print "STEP 1: myballoon   value: ", myballoon
+print("STEP 1: myballoon   value: ", myballoon)
 
 yourballoon = myballoon
 
 yourballoon = yourballoon * 1.25
-print " (changing yourballoon...)"
-print ""
+print(" (changing yourballoon...)")
+print("")
 
-print "STEP 2: myballoon   value: ", myballoon
-print "STEP 2: yourballoon value: ", yourballoon
-print ""
+print("STEP 2: myballoon   value: ", myballoon)
+print("STEP 2: yourballoon value: ", yourballoon)
+print("")
 
 	# So why is this different?
 	#
@@ -108,10 +108,10 @@ print ""
 anotherballoon = copy.deepcopy(myballoon)
 
 anotherballoon = anotherballoon * 12.5
-print " (changing anotherballoon and myballoon...)"
-print ""
+print(" (changing anotherballoon and myballoon...)")
+print("")
 
-print "STEP 3: myballoon      value: ", myballoon
-print "STEP 3: yourballoon    value: ", yourballoon
-print "STEP 3: anotherballoon value: ", anotherballoon
+print("STEP 3: myballoon      value: ", myballoon)
+print("STEP 3: yourballoon    value: ", yourballoon)
+print("STEP 3: anotherballoon value: ", anotherballoon)
 

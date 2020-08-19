@@ -187,7 +187,7 @@ prettyPattern = [	0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
 					1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
 					1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0	]
 
-print "Pretty patterns using characters", PATTERN_CHARACTER_LO, "and", PATTERN_CHARACTER_HI
+print("Pretty patterns using characters", PATTERN_CHARACTER_LO, "and", PATTERN_CHARACTER_HI)
 
 printpattern(prettyPattern)
 

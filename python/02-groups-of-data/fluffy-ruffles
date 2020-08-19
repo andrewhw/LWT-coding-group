@@ -38,13 +38,13 @@ ingredients = [ rum, vermouth ]
 fluffy_ruffles = ( "Fluffy Ruffles", ingredients, lemon )
 
 
-print "Here is the drink recipe, printed out as Python understands it:"
-print fluffy_ruffles
+print("Here is the drink recipe, printed out as Python understands it:")
+print(fluffy_ruffles)
 
 
 	# I did this just to leave three blank lines in what is printed
-print ""
-print ""
+print("")
+print("")
 
 
 	# we can also pull things out of the organized data 
@@ -54,7 +54,7 @@ print ""
 
 ( theNameOfTheDrink, ingredientList, garnish ) = fluffy_ruffles
 
-print "Our Drink: ", theNameOfTheDrink
+print("Our Drink: ", theNameOfTheDrink)
 
 	# here is a way to go through the list of ingredients, one at a time
 	# (Python lists start at "location 0", and so a two element list has
@@ -69,8 +69,8 @@ while ingredientNumber < numberOfIngredients:
 		# is the first item.
 	( amount, ingredientName ) = ingredientList[ ingredientNumber ]
 
-	print "  Ingredient", ingredientNumber, " : ", amount, "ounces of", ingredientName
+	print("  Ingredient", ingredientNumber, " : ", amount, "ounces of", ingredientName)
 	ingredientNumber = ingredientNumber + 1
 
-print "Garnish: ", garnish
+print("Garnish: ", garnish)
 
