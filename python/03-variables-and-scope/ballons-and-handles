@@ -54,7 +54,7 @@ anotherballoon = copy.deepcopy(myballoon)
 anotherballoon[2] = "another"
 myballoon[2] = "some kind of"
 print(" (changing anotherballoon and myballoon...)")
-print(""
+print("")
 
 print("STEP 3: myballoon      value: ", myballoon)
 print("STEP 3: yourballoon    value: ", yourballoon)

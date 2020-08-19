@@ -73,7 +73,7 @@ big = 1234.56789
 
 print("pi is %f" % pi)
 print("pi is %4.2f" % pi)
-print("pi is %8.3f" % pi
+print("pi is %8.3f" % pi)
 print("pi is %15.12f" % pi)
 
 print("big is %f" % big)
